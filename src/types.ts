@@ -10,12 +10,12 @@ export type WeekdayName =
 export type ExposeAs = 'sensor' | 'switch';
 
 export interface SpecialDateConfig {
-  name: string;
-  date: string;
+  name?: string;
+  date?: string;
 }
 
 export interface DateOverrideConfig {
-  date: string;
+  date?: string;
   dayOff?: boolean;
   workFromHome?: boolean;
   officeDay?: boolean;

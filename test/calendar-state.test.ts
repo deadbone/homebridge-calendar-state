@@ -53,6 +53,24 @@ describe('evaluateCalendarState', () => {
     assert.equal(state.isOfficeDay, true);
   });
 
+  it('ignores empty Homebridge UI date override rows', () => {
+    const state = evaluateCalendarState(
+      {
+        ...baseConfig,
+        dateOverrides: [{}],
+      },
+      new Date('2026-07-17T10:00:00.000Z'),
+    );
+    assert.equal(state.isWorkingDay, true);
+  });
+
+  it('rejects non-empty date override rows without a date', () => {
+    assert.throws(
+      () => evaluateCalendarState({ ...baseConfig, dateOverrides: [{ dayOff: true }] }, new Date('2026-07-17T10:00:00.000Z')),
+      /Date override entries must include a date using YYYY-MM-DD/,
+    );
+  });
+
   it('detects first day, last day, and special dates', () => {
     const first = evaluateCalendarState(baseConfig, new Date('2026-07-01T10:00:00.000Z'));
     const last = evaluateCalendarState(baseConfig, new Date('2026-07-31T10:00:00.000Z'));

@@ -1,17 +1,17 @@
 {
   "name": "homebridge-calendar-state",
   "displayName": "Calendar State",
-  "version": "0.1.0-alpha.1",
+  "version": "0.1.0-alpha.2",
   "description": "Configurable calendar state sensors for Homebridge and HomeKit.",
   "license": "MIT",
   "author": "Thierry Lubrez",
-  "homepage": "https://github.com/thierrylubrez/homebridge-calendar-state#readme",
+  "homepage": "https://github.com/deadbone/homebridge-calendar-state#readme",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/thierrylubrez/homebridge-calendar-state.git"
+    "url": "git+https://github.com/deadbone/homebridge-calendar-state.git"
   },
   "bugs": {
-    "url": "https://github.com/thierrylubrez/homebridge-calendar-state/issues"
+    "url": "https://github.com/deadbone/homebridge-calendar-state/issues"
   },
   "keywords": [
     "homebridge-plugin",

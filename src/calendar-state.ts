@@ -1,4 +1,4 @@
-import type { CalendarEvaluation, CalendarStateConfig, StateDefinition, WeekdayName } from './types';
+import type { CalendarEvaluation, CalendarStateConfig, DateOverrideConfig, SpecialDateConfig, StateDefinition, WeekdayName } from './types';
 
 export const WEEKDAYS: WeekdayName[] = [
   'monday',
@@ -48,14 +48,23 @@ export function validateConfig(config: CalendarStateConfig): void {
   }
 
   for (const specialDate of config.specialDates ?? []) {
-    if (!/^\d{2}-\d{2}$/.test(specialDate.date)) {
+    if (isEmptyConfigEntry(specialDate)) {
+      continue;
+    }
+    if (!specialDate.name) {
+      throw new ConfigValidationError('Special date entries must include a name.');
+    }
+    if (!isMonthDay(specialDate.date)) {
       throw new ConfigValidationError(`Special date "${specialDate.name}" must use MM-DD.`);
     }
   }
 
   for (const override of config.dateOverrides ?? []) {
-    if (!/^\d{4}-\d{2}-\d{2}$/.test(override.date)) {
-      throw new ConfigValidationError(`Date override "${override.date}" must use YYYY-MM-DD.`);
+    if (isEmptyConfigEntry(override)) {
+      continue;
+    }
+    if (!isIsoDate(override.date)) {
+      throw new ConfigValidationError('Date override entries must include a date using YYYY-MM-DD.');
     }
   }
 }
@@ -68,7 +77,7 @@ export function evaluateCalendarState(config: CalendarStateConfig, now = new Dat
   const date = `${parts.year}-${parts.month}-${parts.day}`;
   const monthDay = `${parts.month}-${parts.day}`;
   const weekday = parts.weekday;
-  const override = config.dateOverrides?.find((entry) => entry.date === date);
+  const override = getConfiguredDateOverrides(config).find((entry) => entry.date === date);
 
   const isWeekend = Boolean(config.weekendDays?.includes(weekday));
   const regularDayOff = Boolean(config.daysOff?.includes(weekday));
@@ -78,7 +87,7 @@ export function evaluateCalendarState(config: CalendarStateConfig, now = new Dat
   const isWorkingDay = !isWeekend && !isDayOff;
   const daysOfWeek = Object.fromEntries(WEEKDAYS.map((day) => [day, day === weekday])) as Record<WeekdayName, boolean>;
   const specialDates = Object.fromEntries(
-    (config.specialDates ?? []).map((specialDate) => [specialDate.name, specialDate.date === monthDay]),
+    getConfiguredSpecialDates(config).map((specialDate) => [specialDate.name, specialDate.date === monthDay]),
   );
 
   return {
@@ -136,7 +145,7 @@ export function buildStateDefinitions(config: CalendarStateConfig): StateDefinit
     definitions.push({ id: 'last-day-of-month', name: 'Is Last Day Of Month', getValue: (state) => state.isLastDayOfMonth });
   }
   if (expose.specialDates) {
-    for (const specialDate of config.specialDates ?? []) {
+    for (const specialDate of getConfiguredSpecialDates(config)) {
       definitions.push({
         id: `special-${slugify(specialDate.name)}`,
         name: `Is Special Date: ${specialDate.name}`,
@@ -146,6 +155,16 @@ export function buildStateDefinitions(config: CalendarStateConfig): StateDefinit
   }
 
   return definitions;
+}
+
+function getConfiguredSpecialDates(config: CalendarStateConfig): Array<Required<SpecialDateConfig>> {
+  return (config.specialDates ?? []).filter((entry): entry is Required<SpecialDateConfig> => {
+    return Boolean(entry.name && isMonthDay(entry.date));
+  });
+}
+
+function getConfiguredDateOverrides(config: CalendarStateConfig): Array<DateOverrideConfig & { date: string }> {
+  return (config.dateOverrides ?? []).filter((entry): entry is DateOverrideConfig & { date: string } => isIsoDate(entry.date));
 }
 
 export function getMillisecondsUntilNextLocalMidnight(now: Date, timezone: string): number {
@@ -218,6 +237,18 @@ function requirePart(parts: Record<string, string>, key: string): string {
     throw new ConfigValidationError(`Unable to read local date part "${key}".`);
   }
   return value;
+}
+
+function isEmptyConfigEntry(entry: object): boolean {
+  return Object.values(entry).every((value) => value === undefined || value === null || value === '');
+}
+
+function isIsoDate(value: unknown): value is string {
+  return typeof value === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(value);
+}
+
+function isMonthDay(value: unknown): value is string {
+  return typeof value === 'string' && /^\d{2}-\d{2}$/.test(value);
 }
 
 function slugify(value: string): string {
