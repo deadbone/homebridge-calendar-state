@@ -1,0 +1,21 @@
+name: Bug report
+description: Report a problem with Calendar State
+title: "[Bug]: "
+labels: ["bug"]
+body:
+  - type: textarea
+    id: summary
+    attributes:
+      label: Summary
+    validations:
+      required: true
+  - type: textarea
+    id: config
+    attributes:
+      label: Relevant configuration
+      render: json
+  - type: textarea
+    id: logs
+    attributes:
+      label: Homebridge logs
+      render: text

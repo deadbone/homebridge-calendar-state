@@ -1,0 +1,99 @@
+import type { API, DynamicPlatformPlugin, Logging, PlatformAccessory, PlatformConfig } from 'homebridge';
+
+import { buildStateDefinitions, ConfigValidationError, getMillisecondsUntilNextLocalMidnight, validateConfig } from './calendar-state';
+import { CalendarStateAccessory } from './platformAccessory';
+import { PLATFORM_NAME, PLUGIN_NAME } from './settings';
+import type { CalendarStateConfig } from './types';
+
+export class CalendarStatePlatform implements DynamicPlatformPlugin {
+  private readonly accessories = new Map<string, PlatformAccessory>();
+  private readonly stateAccessories: CalendarStateAccessory[] = [];
+  private midnightTimer?: NodeJS.Timeout;
+  private validConfig?: CalendarStateConfig;
+
+  constructor(
+    private readonly log: Logging,
+    config: PlatformConfig,
+    private readonly api: API,
+  ) {
+    const calendarConfig = config as CalendarStateConfig;
+
+    try {
+      validateConfig(calendarConfig);
+      this.validConfig = calendarConfig;
+    } catch (error) {
+      const message = error instanceof ConfigValidationError ? error.message : String(error);
+      this.log.error('Calendar State configuration is invalid: %s', message);
+      return;
+    }
+
+    this.api.on('didFinishLaunching', () => {
+      this.discoverDevices();
+      this.scheduleNextMidnightRefresh();
+    });
+    this.api.on('shutdown', () => this.clearMidnightTimer());
+  }
+
+  configureAccessory(accessory: PlatformAccessory): void {
+    this.accessories.set(accessory.UUID, accessory);
+  }
+
+  private discoverDevices(): void {
+    if (!this.validConfig) {
+      return;
+    }
+
+    const definitions = buildStateDefinitions(this.validConfig);
+    if (definitions.length === 0) {
+      this.log.info('No Calendar State accessories are enabled by configuration.');
+      return;
+    }
+
+    const expectedUuids = new Set<string>();
+    for (const definition of definitions) {
+      const uuid = this.api.hap.uuid.generate(`${PLUGIN_NAME}:${definition.id}`);
+      expectedUuids.add(uuid);
+      const cachedAccessory = this.accessories.get(uuid);
+      const accessory = cachedAccessory ?? new this.api.platformAccessory(definition.name, uuid);
+
+      if (!cachedAccessory) {
+        this.api.registerPlatformAccessories(PLUGIN_NAME, PLATFORM_NAME, [accessory]);
+      }
+
+      this.stateAccessories.push(new CalendarStateAccessory(this.log, this.api, accessory, this.validConfig, definition));
+    }
+
+    const staleAccessories = [...this.accessories.values()].filter((accessory) => !expectedUuids.has(accessory.UUID));
+    if (staleAccessories.length > 0) {
+      this.api.unregisterPlatformAccessories(PLUGIN_NAME, PLATFORM_NAME, staleAccessories);
+    }
+  }
+
+  private scheduleNextMidnightRefresh(): void {
+    if (!this.validConfig) {
+      return;
+    }
+
+    const timezone = this.validConfig.timezone ?? 'UTC';
+    const delay = getMillisecondsUntilNextLocalMidnight(new Date(), timezone);
+    this.clearMidnightTimer();
+    this.midnightTimer = setTimeout(() => {
+      this.refreshAccessories();
+      this.scheduleNextMidnightRefresh();
+    }, delay);
+    this.midnightTimer.unref();
+  }
+
+  private refreshAccessories(): void {
+    for (const accessory of this.stateAccessories) {
+      accessory.refresh();
+    }
+  }
+
+  private clearMidnightTimer(): void {
+    if (this.midnightTimer) {
+      clearTimeout(this.midnightTimer);
+      this.midnightTimer = undefined;
+    }
+  }
+}
