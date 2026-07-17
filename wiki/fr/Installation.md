@@ -1,5 +1,13 @@
 # Installation
 
+# Compatibilité
+
+- Homebridge : `^1.8.0 || ^2.0.0`
+- Node.js : `^22.12.0 || ^24.0.0`
+- Type de plugin : plateforme dynamique
+- Format de module : CommonJS
+
+
 Après publication npm :
 
 ```sh

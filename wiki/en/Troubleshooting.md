@@ -15,3 +15,12 @@ Try `exposeAs: "switch"` if HomeKit handles switch conditions more naturally tha
 ## Date Override Undefined
 
 If Homebridge logs `Date override entries must include a date using YYYY-MM-DD`, remove any partially filled override row or set its `date` field. Empty override rows created by Homebridge UI are ignored by the plugin.
+
+## Security
+
+- No cloud service is used.
+- No telemetry, analytics, or tracking is included.
+- The plugin does not fetch remote calendars or public-holiday feeds.
+- Calendar rules are evaluated locally from Homebridge configuration.
+- No API keys, credentials, or personal calendar data are required.
+- No post-install script modifies the user's system.

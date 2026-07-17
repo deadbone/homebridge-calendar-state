@@ -6,15 +6,37 @@
 
 It can create read-only virtual accessories for weekend, weekday, day off, working day, work from home day, office day, each weekday, first/last day of month, and named special dates.
 
-> Alpha status: `0.1.0-alpha.0` is functional but early. It is not yet Verified by Homebridge.
+> Alpha status: `0.1.0-alpha.2` is functional but early. It is not yet Verified by Homebridge.
+
+## Compatibility
+
+- Homebridge: `^1.8.0 || ^2.0.0`
+- Node.js: `^22.12.0 || ^24.0.0`
+- Plugin type: dynamic platform
+- Module format: CommonJS
+- Network behavior: local rule evaluation only, with no calendar fetching or telemetry
 
 ## Installation
+
+### Homebridge UI
+
+After the package is published to npm:
+
+1. Open Homebridge UI.
+2. Go to **Plugins**.
+3. Search for `homebridge-calendar-state`.
+4. Click **Install**.
+5. Restart Homebridge.
+
+### npm
 
 After the package is published:
 
 ```sh
 npm install -g homebridge-calendar-state@alpha
 ```
+
+### Local development install
 
 For local development:
 
@@ -27,7 +49,24 @@ homebridge -D -U ~/.homebridge-dev
 
 ## Homebridge UI Configuration
 
-This plugin includes `config.schema.json`, so Homebridge UI can render the configuration form. Add a platform named `CalendarState`.
+This plugin includes `config.schema.json`, so Homebridge UI can render the configuration form without a custom UI. Add a platform named `CalendarState`.
+
+## Scoped Homebridge Plugin Compatibility
+
+Homebridge scoped plugins use the npm organization `@homebridge-plugins/`. A future scoped package for this plugin would therefore be named:
+
+```text
+@homebridge-plugins/homebridge-calendar-state
+```
+
+Only the Homebridge collaborators team can initially publish packages under that scope. The current public package remains:
+
+```text
+homebridge-calendar-state
+```
+
+The plugin keeps stable accessory UUIDs based on the state definition IDs, not on a scoped package name. This is intended to make a future scoped migration safer for existing HomeKit accessories, rooms, scenes, and automations.
+
 
 ## Example Configuration
 
@@ -102,6 +141,26 @@ Rules:
 - If `Is Office Day` detects occupancy, turn off home office plugs after departure.
 - If `Is Special Date: Christmas` detects occupancy, run a holiday lighting scene.
 
+
+## Troubleshooting
+
+`Date override entries must include a date using YYYY-MM-DD`: remove the partially filled override row in Homebridge UI or set its `date` field. Fully empty override rows are ignored.
+
+Wrong day or state: verify `timezone` uses an IANA value such as `Europe/Paris`, then restart Homebridge.
+
+No accessories appear: verify the platform is named `CalendarState` and at least one `expose` option is enabled.
+
+HomeKit automations are awkward with sensors: set `exposeAs` to `switch` and restart Homebridge.
+
+## Security
+
+- No cloud service is used.
+- No telemetry, analytics, or tracking is included.
+- The plugin does not fetch remote calendars or public-holiday feeds.
+- Calendar rules are evaluated locally using the configured Homebridge settings.
+- No API keys, credentials, or personal calendar data are required.
+- No post-install script modifies the user's system.
+
 ## Known Limits
 
 - This alpha does not fetch public holidays from remote calendars.
@@ -154,7 +213,7 @@ Do not publish without an explicit release decision.
    npm run build
    npm test
    npm run lint
-   npm pack --dry-run
+   npm --cache .npm-cache pack --dry-run
    ```
 
 6. Publish the alpha:
@@ -201,9 +260,29 @@ MIT. See [LICENSE](LICENSE).
 
 Il peut créer des accessoires virtuels en lecture seule pour week-end, jour de semaine, jour off, jour travaillé, télétravail, bureau, chaque jour de la semaine, premier/dernier jour du mois, et dates spéciales nommées.
 
-> État alpha : `0.1.0-alpha.0` est fonctionnel mais préliminaire. Le plugin n’est pas encore validé Homebridge.
+> État alpha : `0.1.0-alpha.2` est fonctionnel mais préliminaire. Le plugin n’est pas encore validé Homebridge.
+
+## Compatibilité
+
+- Homebridge : `^1.8.0 || ^2.0.0`
+- Node.js : `^22.12.0 || ^24.0.0`
+- Type de plugin : plateforme dynamique
+- Format de module : CommonJS
+- Comportement réseau : évaluation locale des règles uniquement, sans récupération de calendrier ni télémétrie
 
 ## Installation
+
+### Homebridge UI
+
+Une fois le paquet publié sur npm :
+
+1. Ouvrez Homebridge UI.
+2. Allez dans **Plugins**.
+3. Recherchez `homebridge-calendar-state`.
+4. Cliquez sur **Install**.
+5. Redémarrez Homebridge.
+
+### npm
 
 Après publication du package :
 
@@ -222,7 +301,24 @@ homebridge -D -U ~/.homebridge-dev
 
 ## Configuration Homebridge UI
 
-Le plugin inclut `config.schema.json`, ce qui permet à Homebridge UI d’afficher un formulaire de configuration. Ajoutez une plateforme nommée `CalendarState`.
+Le plugin inclut `config.schema.json`, ce qui permet à Homebridge UI d’afficher un formulaire de configuration sans interface personnalisée. Ajoutez une plateforme nommée `CalendarState`.
+
+## Compatibilité avec les plugins scopés Homebridge
+
+Les plugins Homebridge scopés utilisent l’organisation npm `@homebridge-plugins/`. Un futur paquet scopé pour ce plugin s’appellerait donc :
+
+```text
+@homebridge-plugins/homebridge-calendar-state
+```
+
+Seule l’équipe de collaboration Homebridge peut publier initialement sous ce scope. Le paquet public actuel reste :
+
+```text
+homebridge-calendar-state
+```
+
+Le plugin conserve des UUID d’accessoires stables basés sur les identifiants d’états, pas sur le nom du paquet scopé. Cela vise à rendre une future migration plus sûre pour les accessoires, pièces, scènes et automatisations HomeKit existants.
+
 
 ## Exemple de configuration
 
@@ -260,6 +356,26 @@ Règles :
 - Si `Is Work From Home Day` est actif, garder le chauffage du bureau allumé.
 - Si `Is Office Day` est actif, couper les prises du bureau à domicile après le départ.
 - Si `Is Special Date: Christmas` est actif, lancer une scène lumineuse de fête.
+
+
+## Dépannage
+
+`Date override entries must include a date using YYYY-MM-DD` : supprimez la ligne d’exception partiellement remplie dans Homebridge UI ou renseignez son champ `date`. Les lignes entièrement vides sont ignorées.
+
+Mauvais jour ou mauvais état : vérifiez que `timezone` utilise une valeur IANA comme `Europe/Paris`, puis redémarrez Homebridge.
+
+Aucun accessoire n’apparaît : vérifiez que la plateforme s’appelle `CalendarState` et qu’au moins une option `expose` est activée.
+
+Automatisations HomeKit peu pratiques avec les capteurs : définissez `exposeAs` sur `switch` et redémarrez Homebridge.
+
+## Sécurité
+
+- Aucun service cloud n’est utilisé.
+- Aucune télémétrie, analytics ou tracking n’est inclus.
+- Le plugin ne récupère pas de calendriers distants ni de flux de jours fériés.
+- Les règles calendaires sont évaluées localement à partir de la configuration Homebridge.
+- Aucune clé API, aucun identifiant et aucune donnée de calendrier personnel ne sont requis.
+- Aucun script post-install ne modifie le système utilisateur.
 
 ## Limites connues
 
@@ -311,14 +427,8 @@ The repository includes ready-to-copy GitHub wiki pages under `wiki/en/`:
 Suggested workflow:
 
 1. Enable the GitHub wiki.
-2. Create the first wiki page once in the GitHub web UI if the hidden `.wiki.git` repository does not exist yet.
-3. Publish or update the wiki from this repository:
-
-   ```sh
-   scripts/publish-wiki.sh deadbone/homebridge-calendar-state
-   ```
-
-4. Keep wiki pages synchronized with README and `config.schema.json`.
+2. Keep the Markdown sources under `wiki/en/` and `wiki/fr/` synchronized with README and `config.schema.json`.
+3. Update the GitHub wiki separately after wiki source changes by editing the GitHub wiki or by cloning `https://github.com/deadbone/homebridge-calendar-state.wiki.git`, copying the prepared Markdown pages, committing, and pushing the wiki repository.
 
 ---
 
@@ -341,11 +451,5 @@ Le dépôt inclut des pages wiki prêtes à copier sous `wiki/fr/` :
 Flux conseillé :
 
 1. Activer le wiki GitHub.
-2. Créer une première page wiki une seule fois dans l’interface GitHub si le dépôt caché `.wiki.git` n’existe pas encore.
-3. Publier ou mettre à jour le wiki depuis ce dépôt :
-
-   ```sh
-   scripts/publish-wiki.sh deadbone/homebridge-calendar-state
-   ```
-
-4. Garder les pages synchronisées avec le README et `config.schema.json`.
+2. Garder les sources Markdown sous `wiki/en/` et `wiki/fr/` synchronisées avec le README et `config.schema.json`.
+3. Mettre à jour le wiki GitHub séparément après modification des sources wiki, soit depuis l’interface GitHub, soit en clonant `https://github.com/deadbone/homebridge-calendar-state.wiki.git`, en copiant les pages Markdown préparées, puis en commitant et poussant le dépôt wiki.
