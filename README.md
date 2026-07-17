@@ -311,10 +311,14 @@ The repository includes ready-to-copy GitHub wiki pages under `wiki/en/`:
 Suggested workflow:
 
 1. Enable the GitHub wiki.
-2. Clone the wiki repository.
-3. Copy the files from `wiki/en/`.
-4. Commit and push.
-5. Keep wiki pages synchronized with README and `config.schema.json`.
+2. Create the first wiki page once in the GitHub web UI if the hidden `.wiki.git` repository does not exist yet.
+3. Publish or update the wiki from this repository:
+
+   ```sh
+   scripts/publish-wiki.sh deadbone/homebridge-calendar-state
+   ```
+
+4. Keep wiki pages synchronized with README and `config.schema.json`.
 
 ---
 
@@ -337,7 +341,11 @@ Le dépôt inclut des pages wiki prêtes à copier sous `wiki/fr/` :
 Flux conseillé :
 
 1. Activer le wiki GitHub.
-2. Cloner le dépôt wiki.
-3. Copier les fichiers depuis `wiki/fr/`.
-4. Commiter et pousser.
-5. Garder les pages synchronisées avec le README et `config.schema.json`.
+2. Créer une première page wiki une seule fois dans l’interface GitHub si le dépôt caché `.wiki.git` n’existe pas encore.
+3. Publier ou mettre à jour le wiki depuis ce dépôt :
+
+   ```sh
+   scripts/publish-wiki.sh deadbone/homebridge-calendar-state
+   ```
+
+4. Garder les pages synchronisées avec le README et `config.schema.json`.
