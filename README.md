@@ -6,7 +6,7 @@
 
 It can create read-only virtual accessories for weekend, weekday, day off, working day, work from home day, office day, each weekday, first/last day of month, and named special dates.
 
-> Alpha status: `0.1.0-alpha.2` is functional but early. It is not yet Verified by Homebridge.
+> Alpha status: `0.1.0-alpha.3` is functional but early. It is not yet Verified by Homebridge.
 
 ## Compatibility
 
@@ -73,7 +73,7 @@ The plugin keeps stable accessory UUIDs based on the state definition IDs, not o
 ```json
 {
   "platform": "CalendarState",
-  "name": "Calendar State",
+  "name": "Homebridge Calendar State",
   "timezone": "Europe/Paris",
   "locale": "fr-FR",
   "exposeAs": "sensor",
@@ -260,7 +260,7 @@ MIT. See [LICENSE](LICENSE).
 
 Il peut créer des accessoires virtuels en lecture seule pour week-end, jour de semaine, jour off, jour travaillé, télétravail, bureau, chaque jour de la semaine, premier/dernier jour du mois, et dates spéciales nommées.
 
-> État alpha : `0.1.0-alpha.2` est fonctionnel mais préliminaire. Le plugin n’est pas encore validé Homebridge.
+> État alpha : `0.1.0-alpha.3` est fonctionnel mais préliminaire. Le plugin n’est pas encore validé Homebridge.
 
 ## Compatibilité
 

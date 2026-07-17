@@ -8,7 +8,7 @@
       "name": {
         "title": "Name",
         "type": "string",
-        "default": "Calendar State",
+        "default": "Homebridge Calendar State",
         "required": true
       },
       "timezone": {
@@ -27,32 +27,53 @@
         "type": "string",
         "default": "sensor",
         "oneOf": [
-          { "title": "Occupancy sensors", "enum": ["sensor"] },
-          { "title": "Read-only switches", "enum": ["switch"] }
+          {
+            "title": "Occupancy sensors",
+            "enum": [
+              "sensor"
+            ]
+          },
+          {
+            "title": "Read-only switches",
+            "enum": [
+              "switch"
+            ]
+          }
         ]
       },
       "weekendDays": {
         "title": "Weekend Days",
         "type": "array",
-        "items": { "$ref": "#/definitions/weekday" },
-        "default": ["saturday", "sunday"]
+        "items": {
+          "$ref": "#/definitions/weekday"
+        },
+        "default": [
+          "saturday",
+          "sunday"
+        ]
       },
       "daysOff": {
         "title": "Regular Days Off",
         "type": "array",
-        "items": { "$ref": "#/definitions/weekday" },
+        "items": {
+          "$ref": "#/definitions/weekday"
+        },
         "default": []
       },
       "workFromHomeDays": {
         "title": "Regular Work From Home Days",
         "type": "array",
-        "items": { "$ref": "#/definitions/weekday" },
+        "items": {
+          "$ref": "#/definitions/weekday"
+        },
         "default": []
       },
       "officeDays": {
         "title": "Regular Office Days",
         "type": "array",
-        "items": { "$ref": "#/definitions/weekday" },
+        "items": {
+          "$ref": "#/definitions/weekday"
+        },
         "default": []
       },
       "specialDates": {
@@ -61,7 +82,11 @@
         "items": {
           "type": "object",
           "properties": {
-            "name": { "title": "Name", "type": "string", "required": true },
+            "name": {
+              "title": "Name",
+              "type": "string",
+              "required": true
+            },
             "date": {
               "title": "Date",
               "type": "string",
@@ -86,9 +111,18 @@
               "placeholder": "2026-07-17",
               "required": true
             },
-            "dayOff": { "title": "Day Off", "type": "boolean" },
-            "workFromHome": { "title": "Work From Home", "type": "boolean" },
-            "officeDay": { "title": "Office Day", "type": "boolean" }
+            "dayOff": {
+              "title": "Day Off",
+              "type": "boolean"
+            },
+            "workFromHome": {
+              "title": "Work From Home",
+              "type": "boolean"
+            },
+            "officeDay": {
+              "title": "Office Day",
+              "type": "boolean"
+            }
           }
         },
         "default": []
@@ -97,16 +131,56 @@
         "title": "Exposed States",
         "type": "object",
         "properties": {
-          "weekend": { "title": "Is Weekend", "type": "boolean", "default": true },
-          "weekday": { "title": "Is Weekday", "type": "boolean", "default": true },
-          "dayOff": { "title": "Is Day Off", "type": "boolean", "default": true },
-          "workingDay": { "title": "Is Working Day", "type": "boolean", "default": true },
-          "workFromHome": { "title": "Is Work From Home Day", "type": "boolean", "default": true },
-          "officeDay": { "title": "Is Office Day", "type": "boolean", "default": true },
-          "daysOfWeek": { "title": "Days Of Week", "type": "boolean", "default": true },
-          "firstDayOfMonth": { "title": "First Day Of Month", "type": "boolean", "default": true },
-          "lastDayOfMonth": { "title": "Last Day Of Month", "type": "boolean", "default": true },
-          "specialDates": { "title": "Special Dates", "type": "boolean", "default": true }
+          "weekend": {
+            "title": "Is Weekend",
+            "type": "boolean",
+            "default": true
+          },
+          "weekday": {
+            "title": "Is Weekday",
+            "type": "boolean",
+            "default": true
+          },
+          "dayOff": {
+            "title": "Is Day Off",
+            "type": "boolean",
+            "default": true
+          },
+          "workingDay": {
+            "title": "Is Working Day",
+            "type": "boolean",
+            "default": true
+          },
+          "workFromHome": {
+            "title": "Is Work From Home Day",
+            "type": "boolean",
+            "default": true
+          },
+          "officeDay": {
+            "title": "Is Office Day",
+            "type": "boolean",
+            "default": true
+          },
+          "daysOfWeek": {
+            "title": "Days Of Week",
+            "type": "boolean",
+            "default": true
+          },
+          "firstDayOfMonth": {
+            "title": "First Day Of Month",
+            "type": "boolean",
+            "default": true
+          },
+          "lastDayOfMonth": {
+            "title": "Last Day Of Month",
+            "type": "boolean",
+            "default": true
+          },
+          "specialDates": {
+            "title": "Special Dates",
+            "type": "boolean",
+            "default": true
+          }
         }
       }
     },
@@ -114,13 +188,48 @@
       "weekday": {
         "type": "string",
         "oneOf": [
-          { "title": "Monday", "enum": ["monday"] },
-          { "title": "Tuesday", "enum": ["tuesday"] },
-          { "title": "Wednesday", "enum": ["wednesday"] },
-          { "title": "Thursday", "enum": ["thursday"] },
-          { "title": "Friday", "enum": ["friday"] },
-          { "title": "Saturday", "enum": ["saturday"] },
-          { "title": "Sunday", "enum": ["sunday"] }
+          {
+            "title": "Monday",
+            "enum": [
+              "monday"
+            ]
+          },
+          {
+            "title": "Tuesday",
+            "enum": [
+              "tuesday"
+            ]
+          },
+          {
+            "title": "Wednesday",
+            "enum": [
+              "wednesday"
+            ]
+          },
+          {
+            "title": "Thursday",
+            "enum": [
+              "thursday"
+            ]
+          },
+          {
+            "title": "Friday",
+            "enum": [
+              "friday"
+            ]
+          },
+          {
+            "title": "Saturday",
+            "enum": [
+              "saturday"
+            ]
+          },
+          {
+            "title": "Sunday",
+            "enum": [
+              "sunday"
+            ]
+          }
         ]
       }
     }

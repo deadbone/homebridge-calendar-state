@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.1.0-alpha.3
+
+- Rename the Homebridge UI package display name to `Homebridge Calendar State`.
+- Update the default platform display name for new configurations.
+
 ## 0.1.0-alpha.2
 
 - Ignore empty Homebridge UI rows in `dateOverrides` while still rejecting partially filled override entries without a valid `YYYY-MM-DD` date.
