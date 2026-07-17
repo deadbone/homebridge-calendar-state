@@ -5,4 +5,4 @@
 - Quand `Is Office Day` est actif, couper les prises du bureau à domicile après le départ.
 - Quand `Is Special Date: Christmas` est actif, lancer une scène lumineuse de fête.
 
-Utilisez `exposeAs: "switch"` si les interrupteurs sont plus pratiques dans Maison.
+Les états calendaires sont des capteurs en lecture seule ; les apps HomeKit ne peuvent pas modifier leur état manuellement.

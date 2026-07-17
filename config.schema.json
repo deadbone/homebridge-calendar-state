@@ -22,25 +22,6 @@
         "type": "string",
         "default": "fr-FR"
       },
-      "exposeAs": {
-        "title": "Expose As",
-        "type": "string",
-        "default": "sensor",
-        "oneOf": [
-          {
-            "title": "Occupancy sensors",
-            "enum": [
-              "sensor"
-            ]
-          },
-          {
-            "title": "Read-only switches",
-            "enum": [
-              "switch"
-            ]
-          }
-        ]
-      },
       "weekendDays": {
         "title": "Weekend Days",
         "type": "array",

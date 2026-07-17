@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.1.0-alpha.4
+
+- Expose calendar states only as read-only occupancy sensors.
+- Remove the Homebridge UI `exposeAs` switch option.
+- Remove stale switch services from cached accessories during migration.
+
 ## 0.1.0-alpha.3
 
 - Rename the Homebridge UI package display name to `Homebridge Calendar State`.

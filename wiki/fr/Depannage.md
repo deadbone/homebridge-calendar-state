@@ -8,9 +8,9 @@ Vérifiez que la plateforme s’appelle `CalendarState` et qu’au moins une opt
 
 Vérifiez `timezone`. Utilisez une valeur IANA comme `Europe/Paris`.
 
-## Automatisations peu pratiques
+## Peut-on modifier un état manuellement ?
 
-Essayez `exposeAs: "switch"` si Maison gère mieux les conditions d’interrupteurs.
+Non. Les états calendaires sont exposés comme capteurs d’occupation en lecture seule, donc les apps HomeKit ne peuvent pas les modifier manuellement.
 
 ## Exception de date undefined
 

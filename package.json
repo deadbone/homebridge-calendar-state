@@ -1,7 +1,7 @@
 {
   "name": "homebridge-calendar-state",
   "displayName": "Homebridge Calendar State",
-  "version": "0.1.0-alpha.3",
+  "version": "0.1.0-alpha.4",
   "description": "Configurable calendar state sensors for Homebridge and HomeKit.",
   "license": "MIT",
   "author": "Thierry Lubrez",

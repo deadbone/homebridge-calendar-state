@@ -4,9 +4,9 @@
 
 `homebridge-calendar-state` is an alpha Homebridge dynamic platform plugin that exposes configurable calendar states in HomeKit.
 
-It can create read-only virtual accessories for weekend, weekday, day off, working day, work from home day, office day, each weekday, first/last day of month, and named special dates.
+It creates read-only virtual sensor accessories for weekend, weekday, day off, working day, work from home day, office day, each weekday, first/last day of month, and named special dates.
 
-> Alpha status: `0.1.0-alpha.3` is functional but early. It is not yet Verified by Homebridge.
+> Alpha status: `0.1.0-alpha.4` is functional but early. It is not yet Verified by Homebridge.
 
 ## Compatibility
 
@@ -76,7 +76,6 @@ The plugin keeps stable accessory UUIDs based on the state definition IDs, not o
   "name": "Homebridge Calendar State",
   "timezone": "Europe/Paris",
   "locale": "fr-FR",
-  "exposeAs": "sensor",
   "weekendDays": ["saturday", "sunday"],
   "daysOff": ["wednesday"],
   "workFromHomeDays": ["monday", "friday"],
@@ -112,7 +111,6 @@ The plugin keeps stable accessory UUIDs based on the state definition IDs, not o
 
 - `timezone`: IANA timezone used for local day evaluation, for example `Europe/Paris`.
 - `locale`: reserved for display-oriented future behavior.
-- `exposeAs`: `sensor` creates occupancy sensors; `switch` creates read-only switches for easier HomeKit automations.
 - `weekendDays`: days considered weekend. Saturday and Sunday are not assumed unless configured.
 - `daysOff`: regular weekly days off.
 - `workFromHomeDays`: regular weekly work from home days.
@@ -150,8 +148,6 @@ Wrong day or state: verify `timezone` uses an IANA value such as `Europe/Paris`,
 
 No accessories appear: verify the platform is named `CalendarState` and at least one `expose` option is enabled.
 
-HomeKit automations are awkward with sensors: set `exposeAs` to `switch` and restart Homebridge.
-
 ## Security
 
 - No cloud service is used.
@@ -165,7 +161,7 @@ HomeKit automations are awkward with sensors: set `exposeAs` to `switch` and res
 
 - This alpha does not fetch public holidays from remote calendars.
 - Special dates are recurring month/day dates; one-off changes belong in `dateOverrides`.
-- Sensor wording in Apple Home depends on the service type. Use `switch` mode if HomeKit automation conditions are easier.
+- Calendar states are exposed as read-only occupancy sensors so users cannot manually change their state in HomeKit apps.
 
 ## Similar Plugins
 
@@ -258,9 +254,9 @@ MIT. See [LICENSE](LICENSE).
 
 `homebridge-calendar-state` est un plugin Homebridge dynamique en version alpha qui expose dans HomeKit des états calendaires configurables.
 
-Il peut créer des accessoires virtuels en lecture seule pour week-end, jour de semaine, jour off, jour travaillé, télétravail, bureau, chaque jour de la semaine, premier/dernier jour du mois, et dates spéciales nommées.
+Il crée des accessoires virtuels de type capteur en lecture seule pour week-end, jour de semaine, jour off, jour travaillé, télétravail, bureau, chaque jour de la semaine, premier/dernier jour du mois, et dates spéciales nommées.
 
-> État alpha : `0.1.0-alpha.3` est fonctionnel mais préliminaire. Le plugin n’est pas encore validé Homebridge.
+> État alpha : `0.1.0-alpha.4` est fonctionnel mais préliminaire. Le plugin n’est pas encore validé Homebridge.
 
 ## Compatibilité
 
@@ -328,7 +324,6 @@ Voir l’exemple JSON de la section anglaise ; les mêmes champs s’appliquent.
 
 - `timezone` : fuseau IANA utilisé pour calculer le jour local, par exemple `Europe/Paris`.
 - `locale` : réservé pour de futurs comportements d’affichage.
-- `exposeAs` : `sensor` crée des capteurs d’occupation ; `switch` crée des interrupteurs en lecture seule, parfois plus pratiques pour les automatisations HomeKit.
 - `weekendDays` : jours considérés comme week-end. Samedi/dimanche ne sont pas supposés sans configuration.
 - `daysOff` : jours libres réguliers.
 - `workFromHomeDays` : jours de télétravail réguliers.
@@ -366,8 +361,6 @@ Mauvais jour ou mauvais état : vérifiez que `timezone` utilise une valeur IANA
 
 Aucun accessoire n’apparaît : vérifiez que la plateforme s’appelle `CalendarState` et qu’au moins une option `expose` est activée.
 
-Automatisations HomeKit peu pratiques avec les capteurs : définissez `exposeAs` sur `switch` et redémarrez Homebridge.
-
 ## Sécurité
 
 - Aucun service cloud n’est utilisé.
@@ -381,7 +374,7 @@ Automatisations HomeKit peu pratiques avec les capteurs : définissez `exposeAs`
 
 - L’alpha ne récupère pas les jours fériés depuis des calendriers distants.
 - Les dates spéciales sont récurrentes au format mois/jour ; les changements ponctuels passent par `dateOverrides`.
-- Le libellé dans Apple Maison dépend du type de service. Utilisez `switch` si les conditions d’automatisation sont plus simples ainsi.
+- Les états calendaires sont exposés comme capteurs d’occupation en lecture seule afin que les utilisateurs ne puissent pas modifier manuellement leur état dans les apps HomeKit.
 
 ## Plugins similaires
 

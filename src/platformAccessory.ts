@@ -21,26 +21,21 @@ export class CalendarStateAccessory {
 
     accessory.getService(Service.AccessoryInformation)
       ?.setCharacteristic(Characteristic.Manufacturer, 'homebridge-calendar-state')
-      .setCharacteristic(Characteristic.Model, config.exposeAs === 'switch' ? 'Calendar State Switch' : 'Calendar State Sensor')
+      .setCharacteristic(Characteristic.Model, 'Calendar State Sensor')
       .setCharacteristic(Characteristic.SerialNumber, definition.id);
 
-    if (config.exposeAs === 'switch') {
-      this.service = accessory.getService(Service.Switch) ?? accessory.addService(Service.Switch, definition.name, definition.id);
-      this.service.getCharacteristic(Characteristic.On)
-        .onGet(() => this.getBooleanValue())
-        .onSet(() => {
-          this.log.warn('%s is read-only; HomeKit writes are ignored.', definition.name);
-          this.service.updateCharacteristic(Characteristic.On, this.getBooleanValue());
-        });
-    } else {
-      this.service = accessory.getService(Service.OccupancySensor)
-        ?? accessory.addService(Service.OccupancySensor, definition.name, definition.id);
-      this.service.getCharacteristic(Characteristic.OccupancyDetected).onGet(() => {
-        return this.getBooleanValue()
-          ? Characteristic.OccupancyDetected.OCCUPANCY_DETECTED
-          : Characteristic.OccupancyDetected.OCCUPANCY_NOT_DETECTED;
-      });
+    const staleSwitchService = accessory.getService(Service.Switch);
+    if (staleSwitchService) {
+      accessory.removeService(staleSwitchService);
     }
+
+    this.service = accessory.getService(Service.OccupancySensor)
+      ?? accessory.addService(Service.OccupancySensor, definition.name, definition.id);
+    this.service.getCharacteristic(Characteristic.OccupancyDetected).onGet(() => {
+      return this.getBooleanValue()
+        ? Characteristic.OccupancyDetected.OCCUPANCY_DETECTED
+        : Characteristic.OccupancyDetected.OCCUPANCY_NOT_DETECTED;
+    });
 
     this.refresh();
   }
@@ -48,10 +43,6 @@ export class CalendarStateAccessory {
   refresh(): void {
     const { Characteristic } = this.api.hap;
     const value = this.getBooleanValue();
-    if (this.config.exposeAs === 'switch') {
-      this.service.updateCharacteristic(Characteristic.On, value);
-      return;
-    }
     this.service.updateCharacteristic(
       Characteristic.OccupancyDetected,
       value ? Characteristic.OccupancyDetected.OCCUPANCY_DETECTED : Characteristic.OccupancyDetected.OCCUPANCY_NOT_DETECTED,

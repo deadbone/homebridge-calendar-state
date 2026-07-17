@@ -8,9 +8,9 @@ Check that the platform entry is named `CalendarState` and at least one `expose`
 
 Check `timezone`. Use an IANA value such as `Europe/Paris`.
 
-## Automations Are Awkward
+## Can I Manually Change a State?
 
-Try `exposeAs: "switch"` if HomeKit handles switch conditions more naturally than occupancy sensors.
+No. Calendar states are exposed as read-only occupancy sensors so HomeKit apps cannot manually change them.
 
 ## Date Override Undefined
 

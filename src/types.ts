@@ -7,7 +7,6 @@ export type WeekdayName =
   | 'saturday'
   | 'sunday';
 
-export type ExposeAs = 'sensor' | 'switch';
 
 export interface SpecialDateConfig {
   name?: string;
@@ -39,7 +38,6 @@ export interface CalendarStateConfig {
   name?: string;
   timezone?: string;
   locale?: string;
-  exposeAs?: ExposeAs;
   weekendDays?: WeekdayName[];
   daysOff?: WeekdayName[];
   workFromHomeDays?: WeekdayName[];

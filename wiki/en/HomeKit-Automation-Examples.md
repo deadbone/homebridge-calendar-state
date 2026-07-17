@@ -5,4 +5,4 @@
 - When `Is Office Day` is active, switch off home office plugs after departure.
 - When `Is Special Date: Christmas` is active, run a holiday lighting scene.
 
-If Apple Home makes occupancy sensors awkward for a specific automation, set `exposeAs` to `switch`.
+Calendar states are read-only sensors; HomeKit apps cannot manually change their state.
