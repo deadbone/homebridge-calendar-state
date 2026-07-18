@@ -59,7 +59,7 @@ describe('evaluateCalendarState', () => {
     const state = evaluateCalendarState(
       {
         ...baseConfig,
-        dateOverrides: [{}],
+        dateOverrides: [{}, { date: '', dayOff: false, workFromHome: false, officeDay: false }],
       },
       new Date('2026-07-17T10:00:00.000Z'),
     );

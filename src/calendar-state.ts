@@ -304,7 +304,7 @@ function requirePart(parts: Record<string, string>, key: string): string {
 }
 
 function isEmptyConfigEntry(entry: object): boolean {
-  return Object.values(entry).every((value) => value === undefined || value === null || value === '');
+  return Object.values(entry).every((value) => value === undefined || value === null || value === '' || value === false);
 }
 
 function isIsoDate(value: unknown): value is string {

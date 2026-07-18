@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.0-alpha.7
+
+- Treat Homebridge UI date override add forms with empty dates and unchecked boolean fields as empty rows so they do not affect saved configuration.
+
 ## 0.1.0-alpha.6
 
 - Fixes Homebridge UI array forms so empty `dateOverrides` and `specialDates` add rows do not block configuration saves.
