@@ -1,17 +1,17 @@
-import type { API, Logging, PlatformAccessory, Service } from 'homebridge';
+import type { API, PlatformAccessory, Service } from 'homebridge';
 
 import { evaluateCalendarState } from './calendar-state';
-import type { CalendarStateConfig, StateDefinition } from './types';
+import type { CalendarRuntimeState, CalendarStateConfig, StateDefinition } from './types';
 
 export class CalendarStateAccessory {
   private service: Service;
 
   constructor(
-    private readonly log: Logging,
     private readonly api: API,
     private readonly accessory: PlatformAccessory,
     private readonly config: CalendarStateConfig,
     private readonly definition: StateDefinition,
+    private readonly getRuntimeState: () => CalendarRuntimeState,
   ) {
     const { Service, Characteristic } = this.api.hap;
     accessory.context.stateDefinition = {
@@ -50,6 +50,6 @@ export class CalendarStateAccessory {
   }
 
   private getBooleanValue(): boolean {
-    return this.definition.getValue(evaluateCalendarState(this.config));
+    return this.definition.getValue(evaluateCalendarState(this.config, new Date(), this.getRuntimeState()));
   }
 }

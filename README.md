@@ -4,9 +4,9 @@
 
 `homebridge-calendar-state` is an alpha Homebridge dynamic platform plugin that exposes configurable calendar states in HomeKit.
 
-It creates read-only virtual sensor accessories for weekend, weekday, day off, working day, work from home day, office day, each weekday, first/last day of month, and named special dates.
+It creates read-only virtual sensor accessories for weekend, weekday, day off, working day, work from home day, office day, each weekday, seasons, first/last day of month, and named special dates. It also exposes an optional `Vacation Mode` switch that can temporarily force day-off behavior from HomeKit.
 
-> Alpha status: `0.1.0-alpha.4` is functional but early. It is not yet Verified by Homebridge.
+> Alpha status: `0.1.0-alpha.5` is functional but early. It is not yet Verified by Homebridge.
 
 ## Compatibility
 
@@ -76,6 +76,14 @@ The plugin keeps stable accessory UUIDs based on the state definition IDs, not o
   "name": "Homebridge Calendar State",
   "timezone": "Europe/Paris",
   "locale": "fr-FR",
+  "vacationMode": {
+    "enabled": true,
+    "name": "Vacation Mode"
+  },
+  "seasons": {
+    "enabled": true,
+    "hemisphere": "northern"
+  },
   "weekendDays": ["saturday", "sunday"],
   "daysOff": ["wednesday"],
   "workFromHomeDays": ["monday", "friday"],
@@ -102,7 +110,8 @@ The plugin keeps stable accessory UUIDs based on the state definition IDs, not o
     "daysOfWeek": true,
     "firstDayOfMonth": true,
     "lastDayOfMonth": true,
-    "specialDates": true
+    "specialDates": true,
+    "seasons": true
   }
 }
 ```
@@ -112,6 +121,8 @@ The plugin keeps stable accessory UUIDs based on the state definition IDs, not o
 - `timezone`: IANA timezone used for local day evaluation, for example `Europe/Paris`.
 - `locale`: reserved for display-oriented future behavior.
 - `weekendDays`: days considered weekend. Saturday and Sunday are not assumed unless configured.
+- `vacationMode`: exposes a persisted HomeKit switch. When on, the day is treated as day off and working, office, and work-from-home states are false.
+- `seasons`: enables meteorological season sensors and selects the `northern` or `southern` hemisphere.
 - `daysOff`: regular weekly days off.
 - `workFromHomeDays`: regular weekly work from home days.
 - `officeDays`: regular weekly office days.
@@ -130,7 +141,9 @@ Rules:
 - `workFromHomeDays` defines regular work from home days.
 - `officeDays` defines regular office days.
 - `Is Working Day` is true only when the day is not weekend and not day off.
-- Exact date overrides have priority over weekly rules.
+- `Vacation Mode` has runtime priority over weekly rules and date overrides for working, office, and work-from-home states.
+- Seasons are meteorological: spring is March-May, summer is June-August, autumn is September-November, and winter is December-February in the northern hemisphere. The southern hemisphere inverts them.
+- Exact date overrides have priority over weekly rules when Vacation Mode is off.
 
 ## HomeKit Automation Examples
 
@@ -138,6 +151,8 @@ Rules:
 - If `Is Work From Home Day` detects occupancy, keep office heating enabled.
 - If `Is Office Day` detects occupancy, turn off home office plugs after departure.
 - If `Is Special Date: Christmas` detects occupancy, run a holiday lighting scene.
+- If `Vacation Mode` is on, skip workday automations that would normally trigger during leave.
+- If `Is Summer` detects occupancy, use a lighter climate preset.
 
 
 ## Troubleshooting
@@ -162,10 +177,18 @@ No accessories appear: verify the platform is named `CalendarState` and at least
 - This alpha does not fetch public holidays from remote calendars.
 - Special dates are recurring month/day dates; one-off changes belong in `dateOverrides`.
 - Calendar states are exposed as read-only occupancy sensors so users cannot manually change their state in HomeKit apps.
+- `Vacation Mode` is intentionally exposed as a HomeKit switch because it is a manual override.
 
 ## Similar Plugins
 
 Existing plugins such as `homebridge-calendar-scheduler`, `homebridge-calendar-tempfix`, and `homebridge-daily-sensors` can trigger HomeKit accessories from iCal, webcal, or CalDAV events. `homebridge-calendar-state` has a different goal: it models local, deterministic day-state rules without requiring a remote calendar feed or network access.
+
+## Future Ideas
+
+These ideas are documented for later discussion and are not implemented yet:
+
+- `holidayRanges`: date ranges for vacations or longer exceptional periods.
+- Tomorrow-oriented sensors, such as `Is Tomorrow Working Day` or `Is Tomorrow Day Off`, for evening preparation automations.
 
 ## Roadmap
 
@@ -254,9 +277,9 @@ MIT. See [LICENSE](LICENSE).
 
 `homebridge-calendar-state` est un plugin Homebridge dynamique en version alpha qui expose dans HomeKit des états calendaires configurables.
 
-Il crée des accessoires virtuels de type capteur en lecture seule pour week-end, jour de semaine, jour off, jour travaillé, télétravail, bureau, chaque jour de la semaine, premier/dernier jour du mois, et dates spéciales nommées.
+Il crée des accessoires virtuels de type capteur en lecture seule pour week-end, jour de semaine, jour off, jour travaillé, télétravail, bureau, chaque jour de la semaine, saisons, premier/dernier jour du mois, et dates spéciales nommées. Il expose aussi un switch optionnel `Vacation Mode` pour forcer temporairement le comportement jour off depuis HomeKit.
 
-> État alpha : `0.1.0-alpha.4` est fonctionnel mais préliminaire. Le plugin n’est pas encore validé Homebridge.
+> État alpha : `0.1.0-alpha.5` est fonctionnel mais préliminaire. Le plugin n’est pas encore validé Homebridge.
 
 ## Compatibilité
 
@@ -325,6 +348,8 @@ Voir l’exemple JSON de la section anglaise ; les mêmes champs s’appliquent.
 - `timezone` : fuseau IANA utilisé pour calculer le jour local, par exemple `Europe/Paris`.
 - `locale` : réservé pour de futurs comportements d’affichage.
 - `weekendDays` : jours considérés comme week-end. Samedi/dimanche ne sont pas supposés sans configuration.
+- `vacationMode` : expose un switch HomeKit persistant. Quand il est actif, le jour devient off et les états jour travaillé, bureau et télétravail passent à faux.
+- `seasons` : active les capteurs de saisons météorologiques et choisit l’hémisphère `northern` ou `southern`.
 - `daysOff` : jours libres réguliers.
 - `workFromHomeDays` : jours de télétravail réguliers.
 - `officeDays` : jours au bureau réguliers.
@@ -343,7 +368,9 @@ Règles :
 - `workFromHomeDays` définit les jours de télétravail réguliers.
 - `officeDays` définit les jours au bureau réguliers.
 - `Is Working Day` vaut vrai uniquement si le jour n’est ni week-end ni off.
-- Les exceptions par date ont priorité sur les règles hebdomadaires.
+- `Vacation Mode` a priorité à l’exécution sur les règles hebdomadaires et exceptions pour les états jour travaillé, bureau et télétravail.
+- Les saisons sont météorologiques : printemps de mars à mai, été de juin à août, automne de septembre à novembre, hiver de décembre à février dans l’hémisphère nord. L’hémisphère sud les inverse.
+- Les exceptions par date ont priorité sur les règles hebdomadaires quand Vacation Mode est désactivé.
 
 ## Exemples d’automatisations HomeKit
 
@@ -351,6 +378,8 @@ Règles :
 - Si `Is Work From Home Day` est actif, garder le chauffage du bureau allumé.
 - Si `Is Office Day` est actif, couper les prises du bureau à domicile après le départ.
 - Si `Is Special Date: Christmas` est actif, lancer une scène lumineuse de fête.
+- Si `Vacation Mode` est actif, ignorer les automatisations de jours travaillés pendant les congés.
+- Si `Is Summer` est actif, utiliser un réglage climat plus léger.
 
 
 ## Dépannage
@@ -375,10 +404,18 @@ Aucun accessoire n’apparaît : vérifiez que la plateforme s’appelle `Calend
 - L’alpha ne récupère pas les jours fériés depuis des calendriers distants.
 - Les dates spéciales sont récurrentes au format mois/jour ; les changements ponctuels passent par `dateOverrides`.
 - Les états calendaires sont exposés comme capteurs d’occupation en lecture seule afin que les utilisateurs ne puissent pas modifier manuellement leur état dans les apps HomeKit.
+- `Vacation Mode` est volontairement exposé comme switch HomeKit car c’est une dérogation manuelle.
 
 ## Plugins similaires
 
 Des plugins comme `homebridge-calendar-scheduler`, `homebridge-calendar-tempfix` et `homebridge-daily-sensors` peuvent déclencher des accessoires HomeKit depuis des événements iCal, webcal ou CalDAV. `homebridge-calendar-state` vise autre chose : modéliser des états de journée locaux et déterministes sans flux calendrier distant ni accès réseau.
+
+## Idées à venir
+
+Ces idées sont notées pour discussion ultérieure et ne sont pas encore développées :
+
+- `holidayRanges` : plages de dates pour congés ou périodes exceptionnelles longues.
+- Capteurs orientés demain, comme `Is Tomorrow Working Day` ou `Is Tomorrow Day Off`, pour les automatisations de préparation du soir.
 
 ## Feuille de route
 

@@ -79,6 +79,27 @@ describe('evaluateCalendarState', () => {
     assert.equal(last.isLastDayOfMonth, true);
     assert.equal(special.specialDates['Bastille Day'], true);
   });
+
+  it('lets vacation mode override working, office, and work from home states', () => {
+    const state = evaluateCalendarState(baseConfig, new Date('2026-07-17T10:00:00.000Z'), { vacationMode: true });
+    assert.equal(state.isVacationMode, true);
+    assert.equal(state.isDayOff, true);
+    assert.equal(state.isWorkingDay, false);
+    assert.equal(state.isWorkFromHomeDay, false);
+    assert.equal(state.isOfficeDay, false);
+  });
+
+  it('detects meteorological seasons for northern and southern hemispheres', () => {
+    const northern = evaluateCalendarState(baseConfig, new Date('2026-07-17T10:00:00.000Z'));
+    const southern = evaluateCalendarState(
+      { ...baseConfig, seasons: { hemisphere: 'southern' } },
+      new Date('2026-07-17T10:00:00.000Z'),
+    );
+    assert.equal(northern.season, 'summer');
+    assert.equal(northern.seasons.summer, true);
+    assert.equal(southern.season, 'winter');
+    assert.equal(southern.seasons.winter, true);
+  });
 });
 
 describe('buildStateDefinitions', () => {
@@ -86,6 +107,12 @@ describe('buildStateDefinitions', () => {
     const definitions = buildStateDefinitions(baseConfig);
     assert.ok(definitions.some((definition) => definition.name === 'Is Special Date: Christmas'));
     assert.ok(definitions.some((definition) => definition.name === 'Is Monday'));
+    assert.ok(definitions.some((definition) => definition.name === 'Is Summer'));
+  });
+
+  it('can disable season definitions', () => {
+    const definitions = buildStateDefinitions({ ...baseConfig, seasons: { enabled: false } });
+    assert.equal(definitions.some((definition) => definition.name === 'Is Summer'), false);
   });
 });
 

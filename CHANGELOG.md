@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.1.0-alpha.5
+
+- Adds a persisted `Vacation Mode` HomeKit switch that marks the day off and disables working, office, and work-from-home states while active.
+- Adds read-only meteorological season sensors: `Is Spring`, `Is Summer`, `Is Autumn`, and `Is Winter`.
+- Adds Homebridge UI schema options for Vacation Mode and season hemisphere.
+- Documents future ideas for holiday ranges and tomorrow-oriented sensors without implementing them yet.
+
 ## 0.1.0-alpha.4
 
 - Expose calendar states only as read-only occupancy sensors.

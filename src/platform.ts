@@ -3,12 +3,14 @@ import type { API, DynamicPlatformPlugin, Logging, PlatformAccessory, PlatformCo
 import { buildStateDefinitions, ConfigValidationError, getMillisecondsUntilNextLocalMidnight, validateConfig } from './calendar-state';
 import { CalendarStateAccessory } from './platformAccessory';
 import { PLATFORM_NAME, PLUGIN_NAME } from './settings';
+import { VacationModeAccessory } from './vacationModeAccessory';
 import type { CalendarStateConfig } from './types';
 
 export class CalendarStatePlatform implements DynamicPlatformPlugin {
   private readonly accessories = new Map<string, PlatformAccessory>();
   private readonly stateAccessories: CalendarStateAccessory[] = [];
   private midnightTimer?: NodeJS.Timeout;
+  private vacationMode = false;
   private validConfig?: CalendarStateConfig;
 
   constructor(
@@ -43,13 +45,18 @@ export class CalendarStatePlatform implements DynamicPlatformPlugin {
       return;
     }
 
-    const definitions = buildStateDefinitions(this.validConfig);
-    if (definitions.length === 0) {
-      this.log.info('No Calendar State accessories are enabled by configuration.');
-      return;
+    const expectedUuids = new Set<string>();
+    this.stateAccessories.length = 0;
+
+    if (this.validConfig.vacationMode?.enabled ?? true) {
+      this.registerVacationModeAccessory(expectedUuids);
     }
 
-    const expectedUuids = new Set<string>();
+    const definitions = buildStateDefinitions(this.validConfig);
+    if (definitions.length === 0) {
+      this.log.info('No Calendar State sensor accessories are enabled by configuration.');
+    }
+
     for (const definition of definitions) {
       const uuid = this.api.hap.uuid.generate(`${PLUGIN_NAME}:${definition.id}`);
       expectedUuids.add(uuid);
@@ -60,13 +67,41 @@ export class CalendarStatePlatform implements DynamicPlatformPlugin {
         this.api.registerPlatformAccessories(PLUGIN_NAME, PLATFORM_NAME, [accessory]);
       }
 
-      this.stateAccessories.push(new CalendarStateAccessory(this.log, this.api, accessory, this.validConfig, definition));
+      this.stateAccessories.push(new CalendarStateAccessory(
+        this.api,
+        accessory,
+        this.validConfig,
+        definition,
+        () => ({ vacationMode: this.vacationMode }),
+      ));
     }
 
     const staleAccessories = [...this.accessories.values()].filter((accessory) => !expectedUuids.has(accessory.UUID));
     if (staleAccessories.length > 0) {
       this.api.unregisterPlatformAccessories(PLUGIN_NAME, PLATFORM_NAME, staleAccessories);
     }
+  }
+
+  private registerVacationModeAccessory(expectedUuids: Set<string>): void {
+    if (!this.validConfig) {
+      return;
+    }
+
+    const name = this.validConfig.vacationMode?.name ?? 'Vacation Mode';
+    const uuid = this.api.hap.uuid.generate(`${PLUGIN_NAME}:vacation-mode`);
+    expectedUuids.add(uuid);
+    const cachedAccessory = this.accessories.get(uuid);
+    const accessory = cachedAccessory ?? new this.api.platformAccessory(name, uuid);
+    this.vacationMode = Boolean(accessory.context.vacationModeOn);
+
+    if (!cachedAccessory) {
+      this.api.registerPlatformAccessories(PLUGIN_NAME, PLATFORM_NAME, [accessory]);
+    }
+
+    new VacationModeAccessory(this.log, this.api, accessory, name, (enabled) => {
+      this.vacationMode = enabled;
+      this.refreshAccessories();
+    });
   }
 
   private scheduleNextMidnightRefresh(): void {

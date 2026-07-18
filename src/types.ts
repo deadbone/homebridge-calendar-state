@@ -7,6 +7,8 @@ export type WeekdayName =
   | 'saturday'
   | 'sunday';
 
+export type SeasonName = 'spring' | 'summer' | 'autumn' | 'winter';
+export type HemisphereName = 'northern' | 'southern';
 
 export interface SpecialDateConfig {
   name?: string;
@@ -20,6 +22,16 @@ export interface DateOverrideConfig {
   officeDay?: boolean;
 }
 
+export interface VacationModeConfig {
+  enabled?: boolean;
+  name?: string;
+}
+
+export interface SeasonsConfig {
+  enabled?: boolean;
+  hemisphere?: HemisphereName;
+}
+
 export interface ExposeConfig {
   weekend?: boolean;
   weekday?: boolean;
@@ -31,6 +43,7 @@ export interface ExposeConfig {
   firstDayOfMonth?: boolean;
   lastDayOfMonth?: boolean;
   specialDates?: boolean;
+  seasons?: boolean;
 }
 
 export interface CalendarStateConfig {
@@ -44,22 +57,31 @@ export interface CalendarStateConfig {
   officeDays?: WeekdayName[];
   specialDates?: SpecialDateConfig[];
   dateOverrides?: DateOverrideConfig[];
+  vacationMode?: VacationModeConfig;
+  seasons?: SeasonsConfig;
   expose?: ExposeConfig;
+}
+
+export interface CalendarRuntimeState {
+  vacationMode?: boolean;
 }
 
 export interface CalendarEvaluation {
   date: string;
   monthDay: string;
   weekday: WeekdayName;
+  season: SeasonName;
   isWeekend: boolean;
   isWeekday: boolean;
   isDayOff: boolean;
   isWorkingDay: boolean;
   isWorkFromHomeDay: boolean;
   isOfficeDay: boolean;
+  isVacationMode: boolean;
   isFirstDayOfMonth: boolean;
   isLastDayOfMonth: boolean;
   daysOfWeek: Record<WeekdayName, boolean>;
+  seasons: Record<SeasonName, boolean>;
   specialDates: Record<string, boolean>;
 }
 

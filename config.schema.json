@@ -22,6 +22,52 @@
         "type": "string",
         "default": "fr-FR"
       },
+      "vacationMode": {
+        "title": "Vacation Mode",
+        "type": "object",
+        "properties": {
+          "enabled": {
+            "title": "Expose Vacation Mode Switch",
+            "type": "boolean",
+            "default": true
+          },
+          "name": {
+            "title": "Switch Name",
+            "type": "string",
+            "default": "Vacation Mode"
+          }
+        }
+      },
+      "seasons": {
+        "title": "Seasons",
+        "type": "object",
+        "properties": {
+          "enabled": {
+            "title": "Enable Season Sensors",
+            "type": "boolean",
+            "default": true
+          },
+          "hemisphere": {
+            "title": "Hemisphere",
+            "type": "string",
+            "default": "northern",
+            "oneOf": [
+              {
+                "title": "Northern",
+                "enum": [
+                  "northern"
+                ]
+              },
+              {
+                "title": "Southern",
+                "enum": [
+                  "southern"
+                ]
+              }
+            ]
+          }
+        }
+      },
       "weekendDays": {
         "title": "Weekend Days",
         "type": "array",
@@ -159,6 +205,11 @@
           },
           "specialDates": {
             "title": "Special Dates",
+            "type": "boolean",
+            "default": true
+          },
+          "seasons": {
+            "title": "Seasons",
             "type": "boolean",
             "default": true
           }
