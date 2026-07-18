@@ -1,4 +1,6 @@
 import assert from 'node:assert/strict';
+import { readFileSync } from 'node:fs';
+import { join } from 'node:path';
 import { describe, it } from 'node:test';
 
 import { buildStateDefinitions, evaluateCalendarState, getMillisecondsUntilNextLocalMidnight } from '../src/calendar-state';
@@ -121,5 +123,17 @@ describe('getMillisecondsUntilNextLocalMidnight', () => {
     const delay = getMillisecondsUntilNextLocalMidnight(new Date('2026-07-17T10:00:00.000Z'), 'Europe/Paris');
     assert.ok(delay > 0);
     assert.ok(delay <= 48 * 60 * 60 * 1000);
+  });
+});
+
+
+describe('config.schema.json', () => {
+  it('does not require fields in empty Homebridge UI array add forms', () => {
+    const schema = JSON.parse(readFileSync(join(process.cwd(), 'config.schema.json'), 'utf8'));
+    const properties = schema.schema.properties;
+
+    assert.equal(properties.dateOverrides.items.properties.date.required, undefined);
+    assert.equal(properties.specialDates.items.properties.name.required, undefined);
+    assert.equal(properties.specialDates.items.properties.date.required, undefined);
   });
 });

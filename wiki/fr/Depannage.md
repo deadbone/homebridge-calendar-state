@@ -14,7 +14,7 @@ Non. Les états calendaires sont exposés comme capteurs d’occupation en lectu
 
 ## Exception de date undefined
 
-Si Homebridge affiche `Date override entries must include a date using YYYY-MM-DD`, supprimez la ligne d’exception partiellement remplie ou renseignez son champ `date`. Les lignes vides créées par Homebridge UI sont ignorées par le plugin.
+Si Homebridge affiche `Date override entries must include a date using YYYY-MM-DD`, supprimez la ligne d’exception partiellement remplie ou renseignez son champ `date`. Les lignes vides créées par Homebridge UI sont ignorées par le plugin, et le schéma ne force pas la saisie du formulaire d’ajout vide.
 
 ## Sécurité
 

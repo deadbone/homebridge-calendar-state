@@ -157,7 +157,7 @@ Rules:
 
 ## Troubleshooting
 
-`Date override entries must include a date using YYYY-MM-DD`: remove the partially filled override row in Homebridge UI or set its `date` field. Fully empty override rows are ignored.
+`Date override entries must include a date using YYYY-MM-DD`: remove the partially filled override row in Homebridge UI or set its `date` field. Fully empty override rows are ignored, and the Homebridge UI schema does not require the empty add form to be completed.
 
 Wrong day or state: verify `timezone` uses an IANA value such as `Europe/Paris`, then restart Homebridge.
 
@@ -384,7 +384,7 @@ Règles :
 
 ## Dépannage
 
-`Date override entries must include a date using YYYY-MM-DD` : supprimez la ligne d’exception partiellement remplie dans Homebridge UI ou renseignez son champ `date`. Les lignes entièrement vides sont ignorées.
+`Date override entries must include a date using YYYY-MM-DD` : supprimez la ligne d’exception partiellement remplie dans Homebridge UI ou renseignez son champ `date`. Les lignes entièrement vides sont ignorées, et le schéma Homebridge UI ne force pas la saisie du formulaire d’ajout vide.
 
 Mauvais jour ou mauvais état : vérifiez que `timezone` utilise une valeur IANA comme `Europe/Paris`, puis redémarrez Homebridge.
 

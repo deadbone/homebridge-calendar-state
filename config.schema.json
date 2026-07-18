@@ -111,15 +111,13 @@
           "properties": {
             "name": {
               "title": "Name",
-              "type": "string",
-              "required": true
+              "type": "string"
             },
             "date": {
               "title": "Date",
               "type": "string",
               "pattern": "^\\d{2}-\\d{2}$",
-              "placeholder": "12-25",
-              "required": true
+              "placeholder": "12-25"
             }
           }
         },
@@ -135,8 +133,7 @@
               "title": "Date",
               "type": "string",
               "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
-              "placeholder": "2026-07-17",
-              "required": true
+              "placeholder": "2026-07-17"
             },
             "dayOff": {
               "title": "Day Off",

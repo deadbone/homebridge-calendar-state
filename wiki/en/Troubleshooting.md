@@ -14,7 +14,7 @@ No. Calendar states are exposed as read-only occupancy sensors so HomeKit apps c
 
 ## Date Override Undefined
 
-If Homebridge logs `Date override entries must include a date using YYYY-MM-DD`, remove any partially filled override row or set its `date` field. Empty override rows created by Homebridge UI are ignored by the plugin.
+If Homebridge logs `Date override entries must include a date using YYYY-MM-DD`, remove any partially filled override row or set its `date` field. Empty override rows created by Homebridge UI are ignored by the plugin, and the schema does not require the empty add form to be completed.
 
 ## Security
 

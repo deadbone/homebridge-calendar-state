@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.1.0-alpha.6
+
+- Fixes Homebridge UI array forms so empty `dateOverrides` and `specialDates` add rows do not block configuration saves.
+- Keeps runtime validation for partially filled date override and special date entries.
+
 ## 0.1.0-alpha.5
 
 - Adds a persisted `Vacation Mode` HomeKit switch that marks the day off and disables working, office, and work-from-home states while active.
