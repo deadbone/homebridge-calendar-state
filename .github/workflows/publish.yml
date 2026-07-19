@@ -1,0 +1,50 @@
+name: Publish to npm
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+permissions:
+  contents: read
+  id-token: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 24.x
+          registry-url: https://registry.npmjs.org
+          package-manager-cache: false
+
+      - name: Install latest npm
+        run: npm install -g npm@latest
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Verify tag matches package version
+        run: |
+          node -e "const pkg = require('./package.json'); const tag = process.env.GITHUB_REF_NAME; const expected = `v${pkg.version}`; if (tag !== expected) { console.error(`Tag ${tag} does not match package.json version ${pkg.version}; expected ${expected}.`); process.exit(1); }"
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Build
+        run: npm run build
+
+      - name: Test
+        run: npm test
+
+      - name: Verify package script
+        run: npm run verify:pack --if-present
+
+      - name: Verify package contents
+        run: npm --cache .npm-cache pack --dry-run
+
+      - name: Publish
+        run: npm publish

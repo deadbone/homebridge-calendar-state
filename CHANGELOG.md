@@ -1,5 +1,10 @@
 # Changelog
 
+## Unreleased
+
+- Add GitHub Actions Trusted Publishing for npm releases without npm tokens.
+- Document the npm trusted publisher settings for this repository.
+
 ## 0.1.0-alpha.7
 
 - Treat Homebridge UI date override add forms with empty dates and unchecked boolean fields as empty rows so they do not affect saved configuration.

@@ -212,6 +212,8 @@ The calendar engine lives in `src/calendar-state.ts`; Homebridge integration liv
 
 Do not publish without an explicit release decision.
 
+Publishing is automated through GitHub Actions Trusted Publishing. Do not create an npm token and do not add `NODE_AUTH_TOKEN` to GitHub secrets.
+
 1. Create or choose the package name. The suggested name is `homebridge-calendar-state`.
 2. Check availability:
 
@@ -219,11 +221,13 @@ Do not publish without an explicit release decision.
    npm view homebridge-calendar-state
    ```
 
-3. Log in:
+3. On npmjs.com, open the package settings, choose **Trusted Publishing**, select **GitHub Actions**, and enter:
 
-   ```sh
-   npm login
-   ```
+   - Organization or user: `deadbone`
+   - Repository: `homebridge-calendar-state`
+   - Workflow filename: `publish.yml`
+   - Allowed actions: `npm publish`
+   - Environment name: leave empty
 
 4. Verify `package.json`, especially `name`, `version`, `description`, `keywords`, `engines`, `main`, `types`, `files`, `repository`, and `bugs`.
 5. Run checks:
@@ -235,13 +239,18 @@ Do not publish without an explicit release decision.
    npm --cache .npm-cache pack --dry-run
    ```
 
-6. Publish the alpha:
+6. Commit the release changes, create a tag that exactly matches `package.json.version`, and push it:
 
    ```sh
-   npm publish --tag alpha
+   VERSION=$(node -p "require('./package.json').version")
+   git tag "v$VERSION"
+   git push origin main
+   git push origin "v$VERSION"
    ```
 
-7. Install the alpha:
+   The `.github/workflows/publish.yml` workflow runs only for tags matching `v*`, installs Node.js 24.x and the latest npm, verifies that the tag equals `v${package.json.version}`, runs lint, build, tests, and package verification, then publishes with `npm publish` through npm OIDC trusted publishing.
+
+7. Install the alpha after the workflow publishes it:
 
    ```sh
    npm install -g homebridge-calendar-state@alpha
