@@ -10,6 +10,7 @@
 - Add GitHub Actions Trusted Publishing for internal PR beta packages and stable releases without npm tokens.
 - Publish PR beta builds with unique `beta.pr.<PR>.<RUN>.<ATTEMPT>` versions under the npm `beta` tag.
 - Release stable patch versions automatically after merged PRs to `main`, including the npm `latest` publish, git tag, and GitHub Release.
+- Allow manually publishing the current stable package through GitHub Actions Trusted Publishing.
 - Document the npm trusted publisher settings and beta/stable release flow for this repository.
 
 ## 0.1.0-alpha.7

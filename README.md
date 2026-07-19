@@ -267,6 +267,8 @@ Publishing is automated through GitHub Actions Trusted Publishing. Do not create
    npm install -g homebridge-calendar-state@latest
    ```
 
+If a stable version already exists in `package.json` and only needs to be published through Trusted Publishing, run the `Publish to npm` workflow manually from GitHub Actions.
+
 ## Homebridge Verification
 
 This plugin is not yet Verified by Homebridge. Before applying:
