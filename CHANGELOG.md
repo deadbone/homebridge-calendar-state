@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- Catch and log runtime accessory refresh/evaluation errors so Homebridge does not receive unhandled plugin exceptions.
+
 ## 0.1.0
 
 - First stable release line.
