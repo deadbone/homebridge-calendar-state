@@ -8,8 +8,7 @@
       "name": {
         "title": "Name",
         "type": "string",
-        "default": "Homebridge Calendar State",
-        "required": true
+        "default": "Homebridge Calendar State"
       },
       "timezone": {
         "title": "Timezone",
@@ -213,6 +212,9 @@
         }
       }
     },
+    "required": [
+      "name"
+    ],
     "definitions": {
       "weekday": {
         "type": "string",
