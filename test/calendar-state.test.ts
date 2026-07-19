@@ -136,4 +136,28 @@ describe('config.schema.json', () => {
     assert.equal(properties.specialDates.items.properties.name.required, undefined);
     assert.equal(properties.specialDates.items.properties.date.required, undefined);
   });
+
+  it('uses object-level required arrays instead of field-level booleans', () => {
+    const schema = JSON.parse(readFileSync(join(process.cwd(), 'config.schema.json'), 'utf8'));
+    const invalidPaths: string[] = [];
+
+    function collectFieldLevelRequiredBooleans(value: unknown, path: string): void {
+      if (!value || typeof value !== 'object') {
+        return;
+      }
+
+      if ('required' in value && typeof (value as { required?: unknown }).required === 'boolean') {
+        invalidPaths.push(`${path}.required`);
+      }
+
+      for (const [key, child] of Object.entries(value)) {
+        collectFieldLevelRequiredBooleans(child, `${path}.${key}`);
+      }
+    }
+
+    collectFieldLevelRequiredBooleans(schema, 'schema');
+
+    assert.deepEqual(invalidPaths, []);
+    assert.deepEqual(schema.schema.required, ['name']);
+  });
 });

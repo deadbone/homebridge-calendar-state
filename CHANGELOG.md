@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- Fix the Homebridge UI config schema to use JSON Schema object-level `required` arrays instead of field-level booleans.
 - Catch and log runtime accessory refresh/evaluation errors so Homebridge does not receive unhandled plugin exceptions.
 
 ## 0.1.0
