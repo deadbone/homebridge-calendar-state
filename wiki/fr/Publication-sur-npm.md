@@ -12,23 +12,39 @@ Configurez les paramètres du package sur npmjs.com > Trusted Publishing > GitHu
 - Allowed actions: `npm publish`
 - Environment name: laisser vide
 
+Exécutez les vérifications localement avant d'ouvrir une PR de release :
+
 ```sh
 npm run build
 npm test
 npm run lint
 npm --cache .npm-cache pack --dry-run
-VERSION=$(node -p "require('./package.json').version")
-git tag "v$VERSION"
-git push origin main
-git push origin "v$VERSION"
 ```
 
-Le workflow de publication s'exécute uniquement pour les tags `v*`, vérifie que le tag correspond exactement à `package.json.version`, puis publie avec `npm publish` via npm OIDC trusted publishing.
-
-Installer l’alpha :
+Ouvrez une pull request interne vers `main`. Le workflow de publication valide le projet avec `npm ci`, lint, build, tests et vérification du paquet, puis publie une beta avec le tag npm `beta` :
 
 ```sh
-npm install -g homebridge-calendar-state@alpha
+npm install -g homebridge-calendar-state@beta
 ```
 
-Pour une version stable, publier une version semver non prérelease avec le tag `latest`.
+Les versions beta exactes utilisent :
+
+```text
+<next-patch>-beta.pr.<PR_NUMBER>.<RUN_NUMBER>.<RUN_ATTEMPT>
+```
+
+Exemple :
+
+```sh
+npm install -g homebridge-calendar-state@0.1.0-beta.pr.2.5.1
+```
+
+La publication beta ne s'exécute que pour les PR dont la branche est dans `deadbone/homebridge-calendar-state`, pas pour les forks. Le workflow doit deja exister dans `main` ou dans la branche de la PR avant qu'une PR puisse publier sa propre beta.
+
+Quand la PR est mergée dans `main`, le workflow valide le projet fusionné, exécute `npm version patch -m "chore: release v%s [skip ci]"`, pousse le commit de release et le tag, publie la version stable avec le tag npm `latest` par défaut, puis crée la GitHub Release latest avec les notes générées.
+
+Installer la version stable :
+
+```sh
+npm install -g homebridge-calendar-state@latest
+```

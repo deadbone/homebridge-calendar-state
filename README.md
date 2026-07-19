@@ -230,7 +230,7 @@ Publishing is automated through GitHub Actions Trusted Publishing. Do not create
    - Environment name: leave empty
 
 4. Verify `package.json`, especially `name`, `version`, `description`, `keywords`, `engines`, `main`, `types`, `files`, `repository`, and `bugs`.
-5. Run checks:
+5. Run checks locally before opening a release PR:
 
    ```sh
    npm run build
@@ -239,24 +239,33 @@ Publishing is automated through GitHub Actions Trusted Publishing. Do not create
    npm --cache .npm-cache pack --dry-run
    ```
 
-6. Commit the release changes, create a tag that exactly matches `package.json.version`, and push it:
+6. Open an internal pull request against `main`. The `.github/workflows/publish.yml` workflow validates the project with `npm ci`, lint, build, tests, and package verification, then publishes a uniquely versioned beta package with the npm `beta` tag:
 
    ```sh
-   VERSION=$(node -p "require('./package.json').version")
-   git tag "v$VERSION"
-   git push origin main
-   git push origin "v$VERSION"
+   npm install -g homebridge-calendar-state@beta
    ```
 
-   The `.github/workflows/publish.yml` workflow runs only for tags matching `v*`, installs Node.js 24.x and the latest npm, verifies that the tag equals `v${package.json.version}`, runs lint, build, tests, and package verification, then publishes with `npm publish` through npm OIDC trusted publishing.
+   Exact beta versions use:
 
-7. Install the alpha after the workflow publishes it:
+   ```text
+   <next-patch>-beta.pr.<PR_NUMBER>.<RUN_NUMBER>.<RUN_ATTEMPT>
+   ```
+
+   Example install:
 
    ```sh
-   npm install -g homebridge-calendar-state@alpha
+   npm install -g homebridge-calendar-state@0.1.0-beta.pr.2.5.1
    ```
 
-8. Later, release stable by publishing a non-alpha semver version with the default `latest` tag.
+   Beta publication only runs for PRs whose branch is inside `deadbone/homebridge-calendar-state`, not forks. The beta workflow must already exist in `main` or in the PR branch before a PR can publish its own beta.
+
+7. Merge the PR into `main` when ready. The same workflow validates the merged project, runs `npm version patch -m "chore: release v%s [skip ci]"`, pushes the release commit and tag, publishes the stable package with the default npm `latest` tag, and creates the latest GitHub Release with generated notes.
+
+8. Install the stable release after the workflow publishes it:
+
+   ```sh
+   npm install -g homebridge-calendar-state@latest
+   ```
 
 ## Homebridge Verification
 
