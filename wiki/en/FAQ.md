@@ -2,7 +2,7 @@
 
 ## Does this read Google Calendar, iCloud, or CalDAV?
 
-No. This alpha is local-rule based and intentionally avoids unnecessary network calls.
+No. This plugin is local-rule based and intentionally avoids unnecessary network calls.
 
 ## How is this different from calendar scheduler plugins?
 

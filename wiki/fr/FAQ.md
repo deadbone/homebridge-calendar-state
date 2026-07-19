@@ -2,7 +2,7 @@
 
 ## Le plugin lit-il Google Calendar, iCloud ou CalDAV ?
 
-Non. Cette alpha repose sur des règles locales et évite volontairement les appels réseau inutiles.
+Non. Ce plugin repose sur des règles locales et évite volontairement les appels réseau inutiles.
 
 ## Différence avec les plugins de calendrier existants ?
 

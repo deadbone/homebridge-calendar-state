@@ -11,4 +11,4 @@
 - Pas de script post-install modifiant le système.
 - Documentation claire.
 
-Cette alpha n’est pas encore validée Homebridge.
+Ce plugin n’est pas encore validé Homebridge.

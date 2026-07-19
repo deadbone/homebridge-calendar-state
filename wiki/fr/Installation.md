@@ -11,7 +11,7 @@
 Après publication npm :
 
 ```sh
-npm install -g homebridge-calendar-state@alpha
+npm install -g homebridge-calendar-state@latest
 ```
 
 Ajoutez ensuite la plateforme `CalendarState` dans Homebridge UI ou `config.json`.

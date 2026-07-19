@@ -6,7 +6,7 @@ Le plugin expose des capteurs d’occupation en lecture seule pour les règles c
 
 Il expose aussi un switch optionnel `Vacation Mode`. Quand ce switch est actif, le jour courant se comporte comme un jour off et les capteurs liés au travail passent à faux, ce qui permet d’ignorer facilement les automatisations de jours travaillés pendant les congés.
 
-Cette alpha ne lit pas de calendriers distants. C’est volontaire : le plugin privilégie des règles locales déterministes sans appels réseau inutiles.
+Ce plugin ne lit pas de calendriers distants. C’est volontaire : il privilégie des règles locales déterministes sans appels réseau inutiles.
 
 ## Idées à venir
 

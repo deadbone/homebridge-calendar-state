@@ -36,7 +36,7 @@ Les versions beta exactes utilisent :
 Exemple :
 
 ```sh
-npm install -g homebridge-calendar-state@0.1.0-beta.pr.2.5.1
+npm install -g homebridge-calendar-state@0.1.1-beta.pr.2.5.1
 ```
 
 La publication beta ne s'exécute que pour les PR dont la branche est dans `deadbone/homebridge-calendar-state`, pas pour les forks. Le workflow doit deja exister dans `main` ou dans la branche de la PR avant qu'une PR puisse publier sa propre beta.

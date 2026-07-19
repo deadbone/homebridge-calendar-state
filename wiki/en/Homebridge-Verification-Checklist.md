@@ -11,4 +11,4 @@
 - Does not run post-install system modification scripts.
 - Provides clear user documentation.
 
-This alpha is not yet Verified by Homebridge.
+This plugin is not yet Verified by Homebridge.

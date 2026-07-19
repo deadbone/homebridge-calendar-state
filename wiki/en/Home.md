@@ -6,7 +6,7 @@ It exposes read-only occupancy sensors for rule-based states such as weekend, we
 
 It also exposes an optional `Vacation Mode` switch. When this switch is on, the current day behaves as day off and work-related sensors turn off, which makes it easy to skip workday automations during leave.
 
-This alpha does not read remote calendars. That is intentional: the plugin focuses on deterministic local rules with no unnecessary network calls.
+This plugin does not read remote calendars. That is intentional: it focuses on deterministic local rules with no unnecessary network calls.
 
 ## Future Ideas
 

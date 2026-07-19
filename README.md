@@ -2,11 +2,11 @@
 
 ![Calendar State icon](assets/icon.png)
 
-`homebridge-calendar-state` is an alpha Homebridge dynamic platform plugin that exposes configurable calendar states in HomeKit.
+`homebridge-calendar-state` is a Homebridge dynamic platform plugin that exposes configurable calendar states in HomeKit.
 
 It creates read-only virtual sensor accessories for weekend, weekday, day off, working day, work from home day, office day, each weekday, seasons, first/last day of month, and named special dates. It also exposes an optional `Vacation Mode` switch that can temporarily force day-off behavior from HomeKit.
 
-> Alpha status: `0.1.0-alpha.5` is functional but early. It is not yet Verified by Homebridge.
+> Current stable line: `0.1.x`. The plugin is not yet Verified by Homebridge.
 
 ## Compatibility
 
@@ -33,7 +33,7 @@ After the package is published to npm:
 After the package is published:
 
 ```sh
-npm install -g homebridge-calendar-state@alpha
+npm install -g homebridge-calendar-state@latest
 ```
 
 ### Local development install
@@ -174,7 +174,7 @@ No accessories appear: verify the platform is named `CalendarState` and at least
 
 ## Known Limits
 
-- This alpha does not fetch public holidays from remote calendars.
+- The plugin does not fetch public holidays from remote calendars.
 - Special dates are recurring month/day dates; one-off changes belong in `dateOverrides`.
 - Calendar states are exposed as read-only occupancy sensors so users cannot manually change their state in HomeKit apps.
 - `Vacation Mode` is intentionally exposed as a HomeKit switch because it is a manual override.
@@ -254,7 +254,7 @@ Publishing is automated through GitHub Actions Trusted Publishing. Do not create
    Example install:
 
    ```sh
-   npm install -g homebridge-calendar-state@0.1.0-beta.pr.2.5.1
+   npm install -g homebridge-calendar-state@0.1.1-beta.pr.2.5.1
    ```
 
    Beta publication only runs for PRs whose branch is inside `deadbone/homebridge-calendar-state`, not forks. The beta workflow must already exist in `main` or in the PR branch before a PR can publish its own beta.
@@ -293,11 +293,11 @@ MIT. See [LICENSE](LICENSE).
 
 # Documentation française
 
-`homebridge-calendar-state` est un plugin Homebridge dynamique en version alpha qui expose dans HomeKit des états calendaires configurables.
+`homebridge-calendar-state` est un plugin Homebridge dynamique qui expose dans HomeKit des états calendaires configurables.
 
 Il crée des accessoires virtuels de type capteur en lecture seule pour week-end, jour de semaine, jour off, jour travaillé, télétravail, bureau, chaque jour de la semaine, saisons, premier/dernier jour du mois, et dates spéciales nommées. Il expose aussi un switch optionnel `Vacation Mode` pour forcer temporairement le comportement jour off depuis HomeKit.
 
-> État alpha : `0.1.0-alpha.5` est fonctionnel mais préliminaire. Le plugin n’est pas encore validé Homebridge.
+> Ligne stable actuelle : `0.1.x`. Le plugin n’est pas encore validé Homebridge.
 
 ## Compatibilité
 
@@ -324,7 +324,7 @@ Une fois le paquet publié sur npm :
 Après publication du package :
 
 ```sh
-npm install -g homebridge-calendar-state@alpha
+npm install -g homebridge-calendar-state@latest
 ```
 
 Pour le développement local :
@@ -419,7 +419,7 @@ Aucun accessoire n’apparaît : vérifiez que la plateforme s’appelle `Calend
 
 ## Limites connues
 
-- L’alpha ne récupère pas les jours fériés depuis des calendriers distants.
+- Le plugin ne récupère pas les jours fériés depuis des calendriers distants.
 - Les dates spéciales sont récurrentes au format mois/jour ; les changements ponctuels passent par `dateOverrides`.
 - Les états calendaires sont exposés comme capteurs d’occupation en lecture seule afin que les utilisateurs ne puissent pas modifier manuellement leur état dans les apps HomeKit.
 - `Vacation Mode` est volontairement exposé comme switch HomeKit car c’est une dérogation manuelle.

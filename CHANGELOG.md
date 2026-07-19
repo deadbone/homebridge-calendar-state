@@ -2,6 +2,11 @@
 
 ## Unreleased
 
+## 0.1.0
+
+- First stable release line.
+- Promote the package version from alpha to the stable release line.
+- Includes the previous Homebridge UI date override fix and all previous calendar state features.
 - Add GitHub Actions Trusted Publishing for internal PR beta packages and stable releases without npm tokens.
 - Publish PR beta builds with unique `beta.pr.<PR>.<RUN>.<ATTEMPT>` versions under the npm `beta` tag.
 - Release stable patch versions automatically after merged PRs to `main`, including the npm `latest` publish, git tag, and GitHub Release.
