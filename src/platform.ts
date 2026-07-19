@@ -30,8 +30,12 @@ export class CalendarStatePlatform implements DynamicPlatformPlugin {
     }
 
     this.api.on('didFinishLaunching', () => {
-      this.discoverDevices();
-      this.scheduleNextMidnightRefresh();
+      try {
+        this.discoverDevices();
+        this.scheduleNextMidnightRefresh();
+      } catch (error) {
+        this.log.error('Calendar State failed during startup: %s', error instanceof Error ? error.message : String(error));
+      }
     });
     this.api.on('shutdown', () => this.clearMidnightTimer());
   }
@@ -68,6 +72,7 @@ export class CalendarStatePlatform implements DynamicPlatformPlugin {
       }
 
       this.stateAccessories.push(new CalendarStateAccessory(
+        this.log,
         this.api,
         accessory,
         this.validConfig,
@@ -100,7 +105,7 @@ export class CalendarStatePlatform implements DynamicPlatformPlugin {
 
     new VacationModeAccessory(this.log, this.api, accessory, name, (enabled) => {
       this.vacationMode = enabled;
-      this.refreshAccessories();
+      this.refreshAccessoriesSafely();
     });
   }
 
@@ -113,10 +118,22 @@ export class CalendarStatePlatform implements DynamicPlatformPlugin {
     const delay = getMillisecondsUntilNextLocalMidnight(new Date(), timezone);
     this.clearMidnightTimer();
     this.midnightTimer = setTimeout(() => {
-      this.refreshAccessories();
-      this.scheduleNextMidnightRefresh();
+      this.refreshAccessoriesSafely();
+      try {
+        this.scheduleNextMidnightRefresh();
+      } catch (error) {
+        this.log.error('Calendar State failed to schedule the next midnight refresh: %s', error instanceof Error ? error.message : String(error));
+      }
     }, delay);
     this.midnightTimer.unref();
+  }
+
+  private refreshAccessoriesSafely(): void {
+    try {
+      this.refreshAccessories();
+    } catch (error) {
+      this.log.error('Calendar State failed to refresh accessories: %s', error instanceof Error ? error.message : String(error));
+    }
   }
 
   private refreshAccessories(): void {
