@@ -295,6 +295,13 @@ This plugin is Verified by Homebridge. Keep these requirements in place for futu
 - Avoid post-install system changes.
 - Avoid telemetry, analytics, tracking, and unnecessary network calls.
 
+## Support
+
+If this plugin is useful to you, you can support its maintenance through:
+
+- [GitHub Sponsors](https://github.com/sponsors/deadbone)
+- [Ko-fi](https://ko-fi.com/deadbone111019)
+
 ## Contributing
 
 See [CONTRIBUTING.md](CONTRIBUTING.md).
@@ -464,11 +471,18 @@ Ces idées sont notées pour discussion ultérieure et ne sont pas encore dével
 - Plus d’options de types de services HomeKit.
 - Aperçu optionnel des prochains changements d’état.
 - Messages de validation plus détaillés dans Homebridge UI.
-- Demande de validation Homebridge après tests plus larges.
+- Garder la documentation et les metadonnees Homebridge Verified a jour.
 
 ## Publication npm
 
 Voir la section anglaise “Publishing to npm”. Ne publiez pas sans décision explicite de release.
+
+## Soutenir
+
+Si ce plugin vous est utile, vous pouvez soutenir sa maintenance via :
+
+- [GitHub Sponsors](https://github.com/sponsors/deadbone)
+- [Ko-fi](https://ko-fi.com/deadbone111019)
 
 ## Contribution
 

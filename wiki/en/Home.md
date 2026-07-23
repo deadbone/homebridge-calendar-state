@@ -40,6 +40,10 @@ The current npm package is `homebridge-calendar-state`.
 
 If the Homebridge team later accepts the plugin into the scoped plugin program, the scoped package would be `@homebridge-plugins/homebridge-calendar-state`. The plugin keeps stable accessory UUIDs based on state definition IDs so this future migration can preserve existing HomeKit accessories when the Homebridge scoped-plugin migration process is followed.
 
+### Support
+
+If this plugin is useful to you, you can support its maintenance through [GitHub Sponsors](https://github.com/sponsors/deadbone) or [Ko-fi](https://ko-fi.com/deadbone111019).
+
 ### Future ideas
 
 These ideas are documented for later discussion and are not implemented yet:

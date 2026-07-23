@@ -40,6 +40,10 @@ Le paquet npm actuel est `homebridge-calendar-state`.
 
 Si l'equipe Homebridge accepte plus tard le plugin dans le programme des plugins scopes, le paquet scope serait `@homebridge-plugins/homebridge-calendar-state`. Le plugin conserve des UUID HomeKit stables bases sur les identifiants de definitions d'etats afin que cette future migration puisse preserver les accessoires HomeKit existants lorsque la procedure de migration scoped de Homebridge est respectee.
 
+### Soutenir
+
+Si ce plugin vous est utile, vous pouvez soutenir sa maintenance via [GitHub Sponsors](https://github.com/sponsors/deadbone) ou [Ko-fi](https://ko-fi.com/deadbone111019).
+
 ### Idees a venir
 
 Ces idées sont notées pour discussion ultérieure et ne sont pas encore développées :
