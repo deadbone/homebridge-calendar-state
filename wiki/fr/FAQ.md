@@ -10,4 +10,4 @@ Les plugins de type scheduler lisent généralement des événements iCal/CalDAV
 
 ## Le plugin est-il validé Homebridge ?
 
-Pas encore.
+Oui. Ce plugin est validé Homebridge.

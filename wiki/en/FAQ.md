@@ -10,4 +10,4 @@ Calendar scheduler plugins usually watch iCal or CalDAV events and trigger senso
 
 ## Is it Verified by Homebridge?
 
-Not yet.
+Yes. This plugin is Verified by Homebridge.

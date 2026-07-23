@@ -1,12 +1,24 @@
 # homebridge-calendar-state
 
+[![verified-by-homebridge](https://img.shields.io/badge/homebridge-verified-blueviolet?color=%23491F59&style=for-the-badge&logoColor=%23FFFFFF&logo=homebridge)](https://github.com/homebridge/homebridge/wiki/Verified-Plugins)
+
 ![Calendar State icon](assets/icon.png)
 
 `homebridge-calendar-state` is a Homebridge dynamic platform plugin that exposes configurable calendar states in HomeKit.
 
 It creates read-only virtual sensor accessories for weekend, weekday, day off, working day, work from home day, office day, each weekday, seasons, first/last day of month, and named special dates. It also exposes an optional `Vacation Mode` switch that can temporarily force day-off behavior from HomeKit.
 
-> Current stable line: `0.1.x`. The plugin is not yet Verified by Homebridge.
+> Current stable line: `0.1.x`. This plugin is Verified by Homebridge.
+
+## Documentation
+
+Detailed documentation is available in the repository wiki:
+
+- [Installation](wiki/en/Installation.md)
+- [Configuration](wiki/en/Configuration.md)
+- [Calendar logic](wiki/en/Calendar-Logic.md)
+- [HomeKit automation examples](wiki/en/HomeKit-Automation-Examples.md)
+- [Troubleshooting](wiki/en/Troubleshooting.md)
 
 ## Compatibility
 
@@ -195,7 +207,7 @@ These ideas are documented for later discussion and are not implemented yet:
 - More HomeKit service-type options.
 - Optional generated preview of upcoming state changes.
 - Better validation messages in Homebridge UI.
-- Homebridge verification request after wider testing.
+- Keep Homebridge Verified documentation and metadata up to date.
 
 ## Development
 
@@ -271,7 +283,7 @@ If a stable version already exists in `package.json` and only needs to be publis
 
 ## Homebridge Verification
 
-This plugin is not yet Verified by Homebridge. Before applying:
+This plugin is Verified by Homebridge. Keep these requirements in place for future releases:
 
 - Publish the package to npm.
 - Publish source on GitHub with issues enabled.
@@ -299,7 +311,17 @@ MIT. See [LICENSE](LICENSE).
 
 Il crée des accessoires virtuels de type capteur en lecture seule pour week-end, jour de semaine, jour off, jour travaillé, télétravail, bureau, chaque jour de la semaine, saisons, premier/dernier jour du mois, et dates spéciales nommées. Il expose aussi un switch optionnel `Vacation Mode` pour forcer temporairement le comportement jour off depuis HomeKit.
 
-> Ligne stable actuelle : `0.1.x`. Le plugin n’est pas encore validé Homebridge.
+> Ligne stable actuelle : `0.1.x`. Ce plugin est validé Homebridge.
+
+## Documentation
+
+La documentation detaillee est disponible dans le wiki du depot :
+
+- [Installation](wiki/fr/Installation.md)
+- [Configuration](wiki/fr/Configuration.md)
+- [Logique calendrier](wiki/fr/Logique-calendrier.md)
+- [Exemples d'automatisations HomeKit](wiki/fr/Exemples-automatisations-HomeKit.md)
+- [Depannage](wiki/fr/Depannage.md)
 
 ## Compatibilité
 

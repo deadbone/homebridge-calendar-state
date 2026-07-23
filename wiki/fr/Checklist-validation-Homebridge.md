@@ -11,4 +11,4 @@
 - Pas de script post-install modifiant le système.
 - Documentation claire.
 
-Ce plugin n’est pas encore validé Homebridge.
+Ce plugin est validé Homebridge. Cette checklist doit rester satisfaite pour les prochaines releases.
