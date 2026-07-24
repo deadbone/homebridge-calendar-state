@@ -1,7 +1,7 @@
 {
   "name": "homebridge-calendar-state",
   "displayName": "Homebridge Calendar State",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "Configurable calendar state sensors for Homebridge and HomeKit.",
   "license": "MIT",
   "author": "Thierry Lubrez",
@@ -40,7 +40,9 @@
     "format": "prettier --write \"{src,test}/**/*.ts\" \"*.md\" \"wiki/**/*.md\"",
     "lint": "eslint src test --ext .ts",
     "prepack": "npm run build",
-    "test": "npm run build && tsc -p tsconfig.test.json && node --test dist-test/test/*.test.js"
+    "test": "npm run build && tsc -p tsconfig.test.json && node --test dist-test/test/*.test.js",
+    "verify:pack": "node tools/verify-pack.mjs",
+    "prepublishOnly": "npm run lint && npm test && npm run verify:pack"
   },
   "dependencies": {},
   "devDependencies": {
