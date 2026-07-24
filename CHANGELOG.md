@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- Make manual npm Trusted Publishing create the matching git tag and GitHub Release.
+
 ## 0.1.3
 
 - Add npm package archive verification before publication.

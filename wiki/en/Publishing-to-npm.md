@@ -49,4 +49,4 @@ Install the stable release:
 npm install -g homebridge-calendar-state@latest
 ```
 
-If a stable version already exists in `package.json` and only needs to be published through Trusted Publishing, run the `Publish to npm` workflow manually from GitHub Actions.
+If a stable version already exists in `package.json` and only needs to be published through Trusted Publishing, run the `Publish to npm` workflow manually from GitHub Actions. The manual workflow publishes npm, creates the matching `v<version>` git tag, and creates the latest GitHub Release.
