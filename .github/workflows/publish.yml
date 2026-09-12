@@ -2,6 +2,8 @@ name: Publish to npm
 
 on:
   workflow_dispatch:
+  release:
+    types: [published]
   pull_request:
     types: [opened, synchronize, reopened, ready_for_review, closed]
     branches:
@@ -14,7 +16,7 @@ permissions:
 
 jobs:
   publish-current-stable:
-    if: github.event_name == 'workflow_dispatch'
+    if: github.event_name == 'workflow_dispatch' || github.event_name == 'release'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
@@ -49,25 +51,52 @@ jobs:
       - name: Verify package contents
         run: npm --cache .npm-cache pack --dry-run
 
+      - name: Check npm version
+        id: npm-version
+        run: |
+          NAME="$(node -p "require('./package.json').name")"
+          VERSION="$(node -p "require('./package.json').version")"
+          if npm view "${NAME}@${VERSION}" version >/dev/null 2>&1; then
+            echo "Package ${NAME}@${VERSION} already exists on npm."
+            echo "should-publish=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "should-publish=true" >> "$GITHUB_OUTPUT"
+          fi
+
       - name: Publish stable
+        if: steps.npm-version.outputs.should-publish == 'true'
         run: npm publish
 
       - name: Create and push release tag
+        if: github.event_name == 'workflow_dispatch'
         run: |
           VERSION="$(node -p "require('./package.json').version")"
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git tag "v${VERSION}"
-          git push origin "v${VERSION}"
+          if git rev-parse "v${VERSION}" >/dev/null 2>&1; then
+            echo "Tag v${VERSION} already exists locally."
+          else
+            git tag "v${VERSION}"
+          fi
+          if git ls-remote --exit-code --tags origin "v${VERSION}" >/dev/null 2>&1; then
+            echo "Tag v${VERSION} already exists on origin."
+          else
+            git push origin "v${VERSION}"
+          fi
 
       - name: Create GitHub Release
+        if: github.event_name == 'workflow_dispatch'
         run: |
           VERSION="$(node -p "require('./package.json').version")"
-          gh release create "v${VERSION}" \
-            --repo "$GITHUB_REPOSITORY" \
-            --title "v${VERSION}" \
-            --generate-notes \
-            --latest
+          if gh release view "v${VERSION}" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
+            gh release edit "v${VERSION}" --repo "$GITHUB_REPOSITORY" --latest
+          else
+            gh release create "v${VERSION}" \
+              --repo "$GITHUB_REPOSITORY" \
+              --title "v${VERSION}" \
+              --generate-notes \
+              --latest
+          fi
         env:
           GH_TOKEN: ${{ github.token }}
 
