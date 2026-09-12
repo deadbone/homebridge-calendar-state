@@ -91,7 +91,7 @@ describe('evaluateCalendarState', () => {
     assert.equal(state.isOfficeDay, false);
   });
 
-  it('detects meteorological seasons for northern and southern hemispheres', () => {
+  it('detects astronomical seasons for northern and southern hemispheres', () => {
     const northern = evaluateCalendarState(baseConfig, new Date('2026-07-17T10:00:00.000Z'));
     const southern = evaluateCalendarState(
       { ...baseConfig, seasons: { hemisphere: 'southern' } },
@@ -101,6 +101,16 @@ describe('evaluateCalendarState', () => {
     assert.equal(northern.seasons.summer, true);
     assert.equal(southern.season, 'winter');
     assert.equal(southern.seasons.winter, true);
+  });
+
+  it('keeps early September in northern summer until the autumn equinox boundary', () => {
+    const beforeAutumn = evaluateCalendarState(baseConfig, new Date('2026-09-12T10:00:00.000Z'));
+    const autumnBoundary = evaluateCalendarState(baseConfig, new Date('2026-09-22T10:00:00.000Z'));
+
+    assert.equal(beforeAutumn.season, 'summer');
+    assert.equal(beforeAutumn.seasons.summer, true);
+    assert.equal(autumnBoundary.season, 'autumn');
+    assert.equal(autumnBoundary.seasons.autumn, true);
   });
 });
 

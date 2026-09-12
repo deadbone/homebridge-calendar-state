@@ -2,7 +2,10 @@
 
 ## Unreleased
 
+## 0.1.4
+
 - Make manual npm Trusted Publishing create the matching git tag and GitHub Release.
+- Use astronomical season boundaries so early September remains summer in the northern hemisphere.
 
 ## 0.1.3
 

@@ -134,7 +134,7 @@ The plugin keeps stable accessory UUIDs based on the state definition IDs, not o
 - `locale`: reserved for display-oriented future behavior.
 - `weekendDays`: days considered weekend. Saturday and Sunday are not assumed unless configured.
 - `vacationMode`: exposes a persisted HomeKit switch. When on, the day is treated as day off and working, office, and work-from-home states are false.
-- `seasons`: enables meteorological season sensors and selects the `northern` or `southern` hemisphere.
+- `seasons`: enables astronomical season sensors and selects the `northern` or `southern` hemisphere.
 - `daysOff`: regular weekly days off.
 - `workFromHomeDays`: regular weekly work from home days.
 - `officeDays`: regular weekly office days.
@@ -154,7 +154,7 @@ Rules:
 - `officeDays` defines regular office days.
 - `Is Working Day` is true only when the day is not weekend and not day off.
 - `Vacation Mode` has runtime priority over weekly rules and date overrides for working, office, and work-from-home states.
-- Seasons are meteorological: spring is March-May, summer is June-August, autumn is September-November, and winter is December-February in the northern hemisphere. The southern hemisphere inverts them.
+- Seasons are astronomical: spring starts on March 20, summer on June 21, autumn on September 22, and winter on December 21 in the northern hemisphere. The southern hemisphere inverts them.
 - Exact date overrides have priority over weekly rules when Vacation Mode is off.
 
 ## HomeKit Automation Examples
@@ -398,7 +398,7 @@ Voir l’exemple JSON de la section anglaise ; les mêmes champs s’appliquent.
 - `locale` : réservé pour de futurs comportements d’affichage.
 - `weekendDays` : jours considérés comme week-end. Samedi/dimanche ne sont pas supposés sans configuration.
 - `vacationMode` : expose un switch HomeKit persistant. Quand il est actif, le jour devient off et les états jour travaillé, bureau et télétravail passent à faux.
-- `seasons` : active les capteurs de saisons météorologiques et choisit l’hémisphère `northern` ou `southern`.
+- `seasons` : active les capteurs de saisons astronomiques et choisit l’hémisphère `northern` ou `southern`.
 - `daysOff` : jours libres réguliers.
 - `workFromHomeDays` : jours de télétravail réguliers.
 - `officeDays` : jours au bureau réguliers.
@@ -418,7 +418,7 @@ Règles :
 - `officeDays` définit les jours au bureau réguliers.
 - `Is Working Day` vaut vrai uniquement si le jour n’est ni week-end ni off.
 - `Vacation Mode` a priorité à l’exécution sur les règles hebdomadaires et exceptions pour les états jour travaillé, bureau et télétravail.
-- Les saisons sont météorologiques : printemps de mars à mai, été de juin à août, automne de septembre à novembre, hiver de décembre à février dans l’hémisphère nord. L’hémisphère sud les inverse.
+- Les saisons sont astronomiques : printemps à partir du 20 mars, été à partir du 21 juin, automne à partir du 22 septembre, hiver à partir du 21 décembre dans l’hémisphère nord. L’hémisphère sud les inverse.
 - Les exceptions par date ont priorité sur les règles hebdomadaires quand Vacation Mode est désactivé.
 
 ## Exemples d’automatisations HomeKit

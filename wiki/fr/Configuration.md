@@ -26,7 +26,7 @@ Options principales :
 
 - `timezone` : fuseau IANA pour évaluer la date locale.
 - `vacationMode` : switch HomeKit optionnel et persistant. Quand il est actif, le jour courant devient off et les capteurs liés au travail passent à faux.
-- `seasons` : active les capteurs de saisons météorologiques et choisit l’hémisphère `northern` ou `southern`.
+- `seasons` : active les capteurs de saisons astronomiques et choisit l’hémisphère `northern` ou `southern`.
 - `weekendDays` : jours de week-end configurables.
 - `daysOff` : jours off hebdomadaires.
 - `workFromHomeDays` : jours de télétravail réguliers.

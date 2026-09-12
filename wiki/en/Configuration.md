@@ -26,7 +26,7 @@ The plugin ships with `config.schema.json` for Homebridge UI.
 
 - `timezone`: IANA timezone for local date evaluation.
 - `vacationMode`: optional persisted HomeKit switch. When on, the current day is treated as day off and work-related sensors turn off.
-- `seasons`: enables meteorological season sensors and selects the `northern` or `southern` hemisphere.
+- `seasons`: enables astronomical season sensors and selects the `northern` or `southern` hemisphere.
 - `weekendDays`: configurable weekend days.
 - `daysOff`: regular weekly days off.
 - `workFromHomeDays`: regular WFH days.

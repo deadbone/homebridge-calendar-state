@@ -99,7 +99,7 @@ export function evaluateCalendarState(
   const date = `${parts.year}-${parts.month}-${parts.day}`;
   const monthDay = `${parts.month}-${parts.day}`;
   const weekday = parts.weekday;
-  const season = getSeason(parts.month, config.seasons?.hemisphere ?? 'northern');
+  const season = getSeason(parts.month, parts.day, config.seasons?.hemisphere ?? 'northern');
   const override = getConfiguredDateOverrides(config).find((entry) => entry.date === date);
   const isVacationMode = runtimeState.vacationMode ?? false;
 
@@ -255,15 +255,15 @@ function getLocalDateParts(date: Date, timezone: string): {
   };
 }
 
-function getSeason(month: string, hemisphere: HemisphereName): SeasonName {
-  const monthNumber = Number(month);
+function getSeason(month: string, day: string, hemisphere: HemisphereName): SeasonName {
+  const monthDay = Number(`${month}${day}`);
   let northernSeason: SeasonName;
 
-  if (monthNumber >= 3 && monthNumber <= 5) {
+  if (monthDay >= 320 && monthDay < 621) {
     northernSeason = 'spring';
-  } else if (monthNumber >= 6 && monthNumber <= 8) {
+  } else if (monthDay >= 621 && monthDay < 922) {
     northernSeason = 'summer';
-  } else if (monthNumber >= 9 && monthNumber <= 11) {
+  } else if (monthDay >= 922 && monthDay < 1221) {
     northernSeason = 'autumn';
   } else {
     northernSeason = 'winter';

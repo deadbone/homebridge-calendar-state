@@ -9,5 +9,5 @@ Rules:
 - Work from home and office states are defined by weekly rules, unless an exact override changes them.
 - Working day is true only when the day is not weekend and not day off.
 - `Vacation Mode` has runtime priority for work-related states: day off becomes true, and working day, office day, and work from home become false.
-- Seasons are meteorological: spring is March-May, summer is June-August, autumn is September-November, and winter is December-February in the northern hemisphere. The southern hemisphere inverts them.
+- Seasons are astronomical: spring starts on March 20, summer on June 21, autumn on September 22, and winter on December 21 in the northern hemisphere. The southern hemisphere inverts them.
 - Date overrides have priority over weekly rules when Vacation Mode is off.
