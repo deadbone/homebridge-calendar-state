@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+## 0.1.5
+
+- Document how to update the plugin from Homebridge UI in the English and French installation guides.
+
 ## 0.1.4
 
 - Make manual npm Trusted Publishing create the matching git tag and GitHub Release.

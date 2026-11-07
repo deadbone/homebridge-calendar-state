@@ -32,17 +32,15 @@ Detailed documentation is available in the repository wiki:
 
 ### Homebridge UI
 
-After the package is published to npm:
-
 1. Open Homebridge UI.
 2. Go to **Plugins**.
 3. Search for `homebridge-calendar-state`.
 4. Click **Install**.
 5. Restart Homebridge.
 
-### npm
+To update an existing installation, find the plugin under **Plugins**, click **Update** when a new version is available, then restart Homebridge.
 
-After the package is published:
+### npm
 
 ```sh
 npm install -g homebridge-calendar-state@latest
@@ -342,17 +340,15 @@ La documentation detaillee est disponible dans le wiki du depot :
 
 ### Homebridge UI
 
-Une fois le paquet publié sur npm :
-
 1. Ouvrez Homebridge UI.
 2. Allez dans **Plugins**.
 3. Recherchez `homebridge-calendar-state`.
 4. Cliquez sur **Install**.
 5. Redémarrez Homebridge.
 
-### npm
+Pour mettre à jour une installation existante, retrouvez le plugin dans **Plugins**, cliquez sur **Update** lorsqu’une nouvelle version est disponible, puis redémarrez Homebridge.
 
-Après publication du package :
+### npm
 
 ```sh
 npm install -g homebridge-calendar-state@latest
