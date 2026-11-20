@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+## 0.1.6
+
+- Test scheduling at local midnight on regular days and across daylight saving time changes.
+
 ## 0.1.5
 
 - Document how to update the plugin from Homebridge UI in the English and French installation guides.

@@ -129,10 +129,19 @@ describe('buildStateDefinitions', () => {
 });
 
 describe('getMillisecondsUntilNextLocalMidnight', () => {
-  it('returns a positive delay', () => {
+  it('waits until midnight in the configured timezone', () => {
     const delay = getMillisecondsUntilNextLocalMidnight(new Date('2026-07-17T10:00:00.000Z'), 'Europe/Paris');
-    assert.ok(delay > 0);
-    assert.ok(delay <= 48 * 60 * 60 * 1000);
+    assert.equal(delay, 12 * 60 * 60 * 1000);
+  });
+
+  it('waits 23 hours from local midnight on the spring clock change', () => {
+    const delay = getMillisecondsUntilNextLocalMidnight(new Date('2026-03-28T23:00:00.000Z'), 'Europe/Paris');
+    assert.equal(delay, 23 * 60 * 60 * 1000);
+  });
+
+  it('waits 25 hours from local midnight on the autumn clock change', () => {
+    const delay = getMillisecondsUntilNextLocalMidnight(new Date('2026-10-24T22:00:00.000Z'), 'Europe/Paris');
+    assert.equal(delay, 25 * 60 * 60 * 1000);
   });
 });
 
