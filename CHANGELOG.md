@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- Validate the plugin on Node.js 26 with Homebridge 2.5.0.
+
 ## 0.1.6
 
 - Test scheduling at local midnight on regular days and across daylight saving time changes.
