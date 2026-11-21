@@ -1,6 +1,8 @@
 # Changelog
 
-## Unreleased
+## 0.1.7
+
+- Validate the plugin on Node.js 26 with Homebridge 2.5.0.
 
 ## 0.1.6
 

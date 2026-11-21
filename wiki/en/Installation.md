@@ -3,7 +3,7 @@
 # Compatibility
 
 - Homebridge: `^1.8.0 || ^2.0.0`
-- Node.js: `^22.12.0 || ^24.0.0`
+- Node.js: `^22.12.0 || ^24.0.0 || ^26.0.0`. Node.js 26 requires Homebridge 2.5.0 or later.
 - Plugin type: dynamic platform
 - Module format: CommonJS
 

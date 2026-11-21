@@ -23,7 +23,7 @@ Detailed documentation is available in the repository wiki:
 ## Compatibility
 
 - Homebridge: `^1.8.0 || ^2.0.0`
-- Node.js: `^22.12.0 || ^24.0.0`
+- Node.js: `^22.12.0 || ^24.0.0 || ^26.0.0`. Node.js 26 requires Homebridge 2.5.0 or later.
 - Plugin type: dynamic platform
 - Module format: CommonJS
 - Network behavior: local rule evaluation only, with no calendar fetching or telemetry
@@ -331,7 +331,7 @@ La documentation detaillee est disponible dans le wiki du depot :
 ## Compatibilité
 
 - Homebridge : `^1.8.0 || ^2.0.0`
-- Node.js : `^22.12.0 || ^24.0.0`
+- Node.js : `^22.12.0 || ^24.0.0 || ^26.0.0`. Node.js 26 nécessite Homebridge 2.5.0 ou une version ultérieure.
 - Type de plugin : plateforme dynamique
 - Format de module : CommonJS
 - Comportement réseau : évaluation locale des règles uniquement, sans récupération de calendrier ni télémétrie
